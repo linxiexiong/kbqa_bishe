@@ -19,17 +19,17 @@ def get_mid_to_name_mysql(db_conn, mid):
 def gen_type_train_data():
     sq_data_train = data_load('train')
     sq_data_valid = data_load('valid')
-    sq_data_test = data_load('test')
+    #sq_data_test = data_load('test')
 
     sq_data_train = get_type(sq_data_train)
     sq_data_valid = get_type(sq_data_valid)
-    sq_data_test = get_type(sq_data_test)
+    #sq_data_test = get_type(sq_data_test)
 
     #cols = ['questions', 'type', 'type_name']
     print (sq_data_train[0:10])
     sq_data_train.to_csv('type_train.csv')
     sq_data_valid.to_csv('type_valid.csv')
-    sq_data_test.to_csv('type_test.csv')
+    #sq_data_test.to_csv('type_test.csv')
 
 
 

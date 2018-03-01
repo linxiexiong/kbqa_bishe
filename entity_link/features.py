@@ -17,18 +17,18 @@ def data_load(stage="train"):
     if stage == "train":
         #topic_words_file = '../datas/topic_words/train.fuzzy_p2_linker.simple_linker.original.union'
         #sq_data_file = '../datas/SimpleQuestions_v2/annotated_fb_data_train.txt'
-        topic_words_file = '../datas/topic_words/small_topic_words_train.txt'
-        sq_data_file = '../datas/SimpleQuestions_v2/small_train.txt'
+        topic_words_file = '../datas/topic_words/small_topic_words_1w.txt'
+        sq_data_file = '../datas/SimpleQuestions_v2/small_train_1w.txt'
     elif stage == "valid":
         #topic_words_file = '../datas/topic_words/valid.fuzzy_p2_linker.simple_linker.original.union'
         #sq_data_file = '../datas/SimpleQuestions_v2/annotated_fb_data_valid.txt'
-        topic_words_file = '../datas/topic_words/small_topic_words_valid.txt'
-        sq_data_file = '../datas/SimpleQuestions_v2/small_valid.txt'
+        topic_words_file = '../datas/topic_words/small_topic_words_1w_valid.txt'
+        sq_data_file = '../datas/SimpleQuestions_v2/small_valid_1w.txt'
     elif stage == "test":
         #topic_words_file = '../datas/topic_words/test.fuzzy_p2_linker.simple_linker.original.union'
         #sq_data_file = '../datas/SimpleQuestions_v2/annotated_fb_data_test.txt'
         topic_words_file = '../datas/topic_words/small_topic_words_test.txt'
-        sq_data_file = '../datas/SimpleQuestions_v2/small_test.txt'
+        sq_data_file = '../datas/SimpleQuestions_v2/small_test_1w.txt'
     else:
         raise ValueError('invalid stage, which should be one of {train, valid, test}')
 
