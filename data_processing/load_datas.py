@@ -1,7 +1,9 @@
 from __future__ import unicode_literals, division
 import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+sys.path.append('..')
+sys.path.append('../..')
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
 import pandas as pd
 from utils.freebase_wiki import load_pkl_file
 from embedding.basic import Dictionary, FbDictionary

@@ -1,4 +1,5 @@
-import MySQLdb as mdb
+#import MySQLdb as mdb
+import pymysql as mdb
 import traceback
 import logging
 
