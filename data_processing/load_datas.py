@@ -101,6 +101,14 @@ class DataReader(object):
             return name[0]
         return None
 
+    def get_mid_to_type_mysql(self, mid):
+        table_name = 'mid2type'
+        query = "select notable_type from %s where mid = '%s' " % (table_name, mid)
+        #print query
+        name = self.db_conn.search(query)
+        if name is not None and len(name) >= 1:
+            return name[0]
+        return None
 
     @staticmethod
     def get_name_to_mid(name, name_mid_dict):

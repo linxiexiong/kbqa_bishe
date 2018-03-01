@@ -207,6 +207,16 @@ def get_entity_vector(conn, mid):
     return None
 
 
+def mid_type(conn, mid):
+    table_name = 'mid2type'
+    query = "select notable_type from %s where mid = '%s' " % (table_name, mid)
+    vector = conn.search(query)
+    # print (vector)
+    if vector is not None and len(vector) >= 1:
+        return vector[0]
+    return None
+
+
 def feature_select(sq_datas):
     feature_columns = ['lcs_pq', 'lcs_pe', 'lcw_pq', 'lcw_pe', 'tf_idf', 'word_score']
 
@@ -240,7 +250,12 @@ def feature_select(sq_datas):
     sq_datas[vec_cols] = sq_datas[vec_cols].astype(float)
     sq_datas = sq_datas.fillna(value=0)
 
+    sq_datas['type'] = sq_datas.apply(lambda x: mid_type(db_conn, x['topic_words']), axis=1)
+    dummy = pd.get_dummies(sq_datas['type'], prefix='type')
+    sq_datas = pd.concat([sq_datas, dummy], axis=1)
+    for col in dummy.columns:
+        feature_columns.append(col)
     print (sq_datas[0: 50])
-
+    #sq_datas = sq_datas.sample(frac=0.6)
     return sq_datas[feature_columns], sq_datas['label']
 
