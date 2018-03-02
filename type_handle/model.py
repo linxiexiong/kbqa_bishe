@@ -8,9 +8,9 @@ import math
 
 
 n_hidden = 128
-n_epochs = 50000
-print_every = 500
-plot_every = 1000
+n_epochs = 5000
+print_every = 50
+plot_every = 100
 learning_rate = 0.005
 n_letters, categories, n_categories = get_len('type_train.csv')
 print (n_letters, categories, n_categories)
