@@ -27,9 +27,9 @@ def gen_type_train_data():
 
     #cols = ['questions', 'type', 'type_name']
     print (sq_data_train[0:10])
-    sq_data_train.to_csv('type_train.csv')
+    sq_data_train.to_csv('type_train.csv', encoding='utf8')
     #sq_data_valid.to_csv('type_valid.csv')
-    sq_data_test.to_csv('type_test.csv')
+    sq_data_test.to_csv('type_test.csv', encoding='utf8')
 
 
 

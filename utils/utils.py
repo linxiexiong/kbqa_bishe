@@ -10,3 +10,4 @@ def get_name_fome_id_mysql(mid, table_name):
         return name[0]
     return None
 
+

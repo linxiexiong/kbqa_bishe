@@ -5,7 +5,10 @@ from type_rnn import TypeRNN
 from data_handle import *
 import time
 import math
+import argparse
 
+
+args = argparse.Namespace()
 
 n_hidden = 128
 n_epochs = 5000

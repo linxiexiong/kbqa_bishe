@@ -5,7 +5,7 @@ import pandas as pd
 import torch
 from torch.autograd import Variable
 import random
-
+from embedding.vocab import build_word_dict
 
 def unicodeToAscii(s):
     all_letters = string.ascii_letters + ".,;' "
@@ -61,6 +61,11 @@ def data_handle(file_name):
     #print (train_data.loc[0, 'question'])
     #print (line_to_tensor(train_data.loc[0, 'question'], all_letters))
     #print (len(train_data[train_data.cate == 178]))
+    train_data['question'] = train_data['question'].apply(lambda x: unicodeToAscii(x))
+    word_dict = build_word_dict(restrict_vocab=True,
+                                embedding_file='../datas/glove.6B.50d.txt',
+                                examples=train_data['question'])
+    print (len(word_dict))
     return train_data
 
 
