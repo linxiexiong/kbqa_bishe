@@ -1,4 +1,7 @@
 from __future__ import unicode_literals, print_function, division
+import sys
+sys.path.append("..")
+sys.path.append("../..")
 import unicodedata
 import string
 import pandas as pd
@@ -61,11 +64,13 @@ def data_handle(file_name):
     #print (train_data.loc[0, 'question'])
     #print (line_to_tensor(train_data.loc[0, 'question'], all_letters))
     #print (len(train_data[train_data.cate == 178]))
-    train_data['question'] = train_data['question'].apply(lambda x: unicodeToAscii(x))
+    #train_data['question'] = train_data['question'].apply(lambda x: unicodeToAscii(x))
     word_dict = build_word_dict(restrict_vocab=True,
                                 embedding_file='../datas/glove.6B.50d.txt',
                                 examples=train_data['question'])
     print (len(word_dict))
+    for i in range(len(word_dict)):
+        print (word_dict[i])
     return train_data
 
 

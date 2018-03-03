@@ -1,5 +1,6 @@
 from .basic import Dictionary
 import codecs
+from nltk.tokenize import word_tokenize
 
 def index_embedding_words(embedding_file):
     words = set()
@@ -13,10 +14,10 @@ def index_embedding_words(embedding_file):
 
 def load_words(restrict_vocab, embedding_file, example):
     def _insert(iterable):
-        print (iterable)
+        #print (iterable)
         for w in iterable:
-            print(w)
-            w = Dictionary.normalize(w.decode('utf-8'))
+            #print(w)
+            w = Dictionary.normalize(w)
             if valid_words and w not in valid_words:
                 continue
             words.add(w)
@@ -27,6 +28,7 @@ def load_words(restrict_vocab, embedding_file, example):
         valid_words = None
     words = set()
     for ex in example:
+        ex = word_tokenize(ex)
         _insert(ex)
     return words
 
