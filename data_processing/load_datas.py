@@ -1,7 +1,7 @@
 from __future__ import unicode_literals, division
 import sys
-sys.path.append('..')
-sys.path.append('../..')
+sys.path.append("..")
+sys.path.append("../..")
 #reload(sys)
 #sys.setdefaultencoding('utf-8')
 import pandas as pd
@@ -9,7 +9,7 @@ from utils.freebase_wiki import load_pkl_file
 from embedding.basic import Dictionary, FbDictionary
 import numpy as np
 import codecs
-from mysql import MySQL
+from data_processing.mysql import MySQL
 import random
 
 
@@ -209,7 +209,7 @@ class DataReader(object):
                         data["word_name_list"].append(word_name_list)
                         data['word_score'].append(score_list)
                     else:
-                        word_list_sample = [word_list[i] for i in sorted(random.sample(xrange(len(word_list)), 10))]
+                        word_list_sample = [word_list[i] for i in sorted(random.sample(range(len(word_list)), 10))]
                         if label not in word_list_sample:
                             word_list_sample.append(label)
                             word_score_dict[label] = 2.0
@@ -249,7 +249,7 @@ class DataReader(object):
                     data["label"].append(label)
                     data["label_name"].append(label_name)
                     index += 1
-        print index, len(data['label']), len(sq_datas)
+        print (index, len(data['label']), len(sq_datas))
         assert len(data['label']) == len(self.sq_dataset), "two dataset must have same lines"
         sq_datas['topic_words'] = data.get('word_list')
         sq_datas['topic_words_names'] = data.get('word_name_list')
