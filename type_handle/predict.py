@@ -5,21 +5,21 @@ import sys
 
 rnn = torch.load('char-typernn-classification.pt')
 
+print (rnn.word_emb.weight.data)
+print (rnn.char_emb.weight.data)
+rnn.training = False
+print (rnn)
 
-def evaluate(line_tensor):
-    hidden = rnn.init_hidden()
-    for i in range(line_tensor.size()[0]):
-        output, hidden = rnn(line_tensor[i], hidden)
+
+def predict(category_tensor, qw_tensor, qc_tensor):
+    #hidden = rnn.init_hidden()
+    #optimizer.zero_grad()
+    # print (type(q_tensor[0]))
+
+    output = rnn(qw_tensor, qc_tensor)
+    #print (output, hidden)
+    #loss = criterion(output, category_tensor)
+    #loss.backward()
+    #optimizer.step()
 
     return output
-
-
-def predict(line, type, n_predictions=5,):
-    output = evaluate(Variable(line_to_tensor((line))))
-    topv, topi = output.data.topk(n_predictions, 1, True)
-    is_type_in = 0
-    for i in range(n_predictions):
-        category_index = topi[0][i]
-        if category_index == type:
-            is_type_in = 1
-    return is_type_in

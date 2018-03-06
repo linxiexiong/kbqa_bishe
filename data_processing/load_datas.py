@@ -17,7 +17,8 @@ class DataReader(object):
     def __init__(self, mid_name_file=None,
                  mid_qid_file=None,
                  topic_words_file=None,
-                 sq_data_file=None):
+                 sq_data_file=None,
+                 tp_replace_file=None):
         self.sq_dataset = pd.DataFrame()
         self.subject_ids = {}
         self.relations = {}
@@ -33,6 +34,7 @@ class DataReader(object):
         self.mid_qid_file = "../datas/fb2w.nt" if mid_qid_file is None else mid_qid_file
         self.topic_words_file = topic_words_file
         self.sq_data_file = sq_data_file
+        self.tp_replace_file = tp_replace_file
         self.mid_name_dict, self.name_mid_dict = self.mid_name_convert(mid_name_file)
         self.db_conn = MySQL(ip='10.61.2.166', port=3306, user='zengyutao',
                                   pw='zengyutao', db_name='wikidata')
@@ -76,6 +78,31 @@ class DataReader(object):
         self.sq_dataset['qid'] = self.sq_dataset.index
         #print self.sq_dataset[len(self.sq_dataset) - 10:]
         print ("load sq data with df done!")
+
+    def load_topic_word_pos(self, sq_datas):
+        data = pd.read_csv(self.tp_replace_file, header=None, sep='\t')
+        data.columns = ['sid', 'canid', 'qr']
+        new_data = pd.concat([sq_datas, data], axis=1)
+        new_data['pos'] = new_data.apply(lambda x: self.get_topic_word_pos(x['question'],
+                                                                           x['qr']), axis=1)
+        return new_data
+
+    @staticmethod
+    def get_topic_word_pos(str, str1):
+        s = str.strip().split(' ')
+        s1 = str1.strip().split(' ')
+        leng = max(0, len(s) - len(s1))
+        #print (leng)
+        idxs = []
+        for idx, w in enumerate(s1):
+            if len(w) == 0 or len(w) == 1:
+                continue
+            if w[0] == '#' and w[len(w)-1] == '#':
+                for i in range(0, leng+1):
+                    idxs.append(idx + i)
+                #print (idxs)
+                return idxs
+        return idxs
 
     @staticmethod
     def mid_name_convert(mid_name_file):

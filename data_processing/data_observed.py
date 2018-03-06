@@ -67,15 +67,53 @@ def explode(df, lst_cols, fill_value=''):
 #w_sq_datas['label'] = w_sq_datas.apply()
 
 #print w_sq_datas
-db_conn = MySQL(ip='10.61.2.166', port=3306, user='zengyutao',
-                                  pw='zengyutao', db_name='wikidata')
-for i in range(100):
-    mid = 'm.04whkz5'
-    table_name = 'mid2name'
-    query = "select name from %s where mid = '%s' " % (table_name, mid)
-    print query
-    vec = db_conn.search(query)
+# db_conn = MySQL(ip='10.61.2.166', port=3306, user='zengyutao',
+#                                   pw='zengyutao', db_name='wikidata')
+# for i in range(100):
+#     mid = 'm.04whkz5'
+#     table_name = 'mid2name'
+#     query = "select name from %s where mid = '%s' " % (table_name, mid)
+#     print query
+#     vec = db_conn.search(query)
+#
+#     #print vec[0].split(',')
+# db_conn.connect.close()
 
-    #print vec[0].split(',')
-db_conn.connect.close()
+def get_topic_word_pos(str, str1):
+    s = str.strip().split(' ')
+    s1 = str1.strip().split(' ')
+    leng = max(0, len(s) - len(s1))
+    #print (leng)
+    idxs = []
+    for idx, w in enumerate(s1):
+        if len(w) == 0 or len(w) == 1:
+            continue
+        if w[0] == '#' and w[len(w)-1] == '#':
+            for i in range(0, leng+1):
+                idxs.append(idx + i)
+            #print (idxs)
+            return idxs
+    return idxs
 
+def has_four(str):
+    s = str.strip().split(' ')
+    cnt = 0
+    for w in s:
+        if w[0] == '#' and w[len(w)-1] == '#':
+            cnt += 1
+    if cnt > 1 :
+        return str
+    return ' '
+
+dataa = pd.read_csv('../datas/SimpleQuestions_v2/small_train_100.txt', header=None, sep='\t')
+dataa.columns = ['subid', 'rel', 'objid', 'question']
+data = pd.read_csv('../datas/topic_words/topic_words_pos_train_100.txt', header=None, sep='\t')
+data.columns = ['sid', 'cids', 'q']
+#data['is'] = data['q'].apply(lambda x: has_four(x))
+#print (data[data['is'] != ' '])
+data = pd.concat([dataa,data], axis=1)
+print type(data)
+
+data['pos'] = data.apply(lambda x: get_topic_word_pos(x['question'], x['q']), axis=1)
+print(data.loc[:,['q', 'question', 'pos']])
+print (data.columns)

@@ -42,7 +42,9 @@ class StackedBRNN(nn.Module):
             rnn_output = self.rnns[i](rnn_input)[0]
             outputs.append(rnn_output)
         if self.concat_layers:
-            output = torch.cat(outputs[1:], 2)
+            output = torch.cat(outputs[1:], dim=2)
+            output = torch.cat(list(output), dim=1)
+            print (output.size())
         else:
             output = outputs[-1]
         if self.dropout_output and self.dropout_rate > 0:
@@ -135,3 +137,26 @@ class CharRNN(nn.Module):
         x = self.char_embedding(x)
         _, h = self.char_rnn(x)
         return h[1]
+
+
+class SimpleRNN(nn.Module):
+
+    def __init__(self, args):
+        super(SimpleRNN, self).__init__()
+        #self.word_emb = nn.Embedding(args.vocab_size, args.emb_dim)
+
+        #self.word_emb.weight = nn.Parameter(args.word_embedding)
+        self.sentence_rnn = nn.GRU(args.embedding_dim + args.char_dim + args.entity_dim,
+                                   args.hidden_size,
+                                   num_layers=args.num_layers,
+                                   batch_first=True, bidirectional=True)
+        self.word_rnn_init_h = nn.Parameter(torch.randn(2 * args.num_layers,
+                                                        args.batch_size,
+                                                        args.hidden_size).type(torch.FloatTensor),
+                                            )
+
+    def forward(self, emb):
+        #print (out[0][0])
+        _, sent_hidden = self.sentence_rnn(emb, self.word_rnn_init_h)
+        out = torch.cat(list(sent_hidden), dim=1)
+        return out

@@ -50,13 +50,15 @@ class Dictionary(object):
         if type(key) == int:
             return key in self.ind2tok
         elif type(key) == str:
-            return self.normalize(key)
+            #return self.normalize(key)
+            return key
 
     def __getitem__(self, key):
         if type(key) == int:
             return self.ind2tok.get(key)
         if type(key) == str:
-            return self.tok2ind.get(self.normalize(key),
+            #return self.tok2ind.get(self.normalize(key),
+            return self.tok2ind.get(key,
                                     self.tok2ind.get(self.UNK))
 
     def __setitem__(self, key, item):
@@ -68,7 +70,7 @@ class Dictionary(object):
             raise RuntimeError('Invalid (key, item) types.')
 
     def add(self, token):
-        token = self.normalize(token)
+        #token = self.normalize(token)
         if token not in self.tok2ind:
             index = len(self.tok2ind)
             self.tok2ind[token] = index

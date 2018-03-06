@@ -32,7 +32,6 @@ def gen_type_train_data():
     sq_data_test.to_csv('type_test.csv', encoding='utf8')
 
 
-
 def get_type(df):
     db_conn = MySQL(ip='10.61.2.166', port=3306, user='zengyutao',
                                   pw='zengyutao', db_name='wikidata')
