@@ -35,7 +35,7 @@ def train(args, word_dict, train_data):
     words = index_embedding_words(args.embedding_file)
 
     pre_train_embedding = load_pretrain_embedding(words, word_dict, args.embedding_file, args.embedding_dim)
-    print pre_train_embedding
+    print (pre_train_embedding)
     #load_embeddings(words, word_dict, args.embedding_file, qe_model.question_emb)
     #load_embeddings(words, word_dict, args.embedding_file, qe_model.entity_emb)
     #load_embeddings(words, word_dict, args.embedding_file, qr_model.relation_emb)
