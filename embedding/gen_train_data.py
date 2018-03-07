@@ -120,7 +120,7 @@ def gen_train_data(data, word_dict, char_dict, args):
         pos = ast.literal_eval(pos)
         print (pos)
         for j in range(len(pos)):
-            entity_tensor[torch.LongTensor([i])][torch.LongTensor([pos[j]])] =torch.from_numpy(entities_vec)
+            entity_tensor[i][pos[j]] =torch.from_numpy(entities_vec)
     positive_entw_tensor = lines_to_word_tensor(positive_ents, word_dict)
     positive_entc_tensor = lines_to_char_tensor(positive_ents, char_dict)
     positive_ente_tensor = torch.Tensor(positive_vecs)
