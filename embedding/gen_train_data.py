@@ -91,8 +91,9 @@ def gen_train_data(data, word_dict, char_dict, args):
         questions.append(row['question'].loc[n])
         positive_ents.append(row['positive'].loc[n])
         positive_vecs.append(row['positive_vec'].loc[n])
-        neg_ents = row['negative'].tolist()
-        neg_vecs = row['negative_vec'].tolist()
+        neg_ents = row['negative'].loc[n]
+        #print neg_ents
+        neg_vecs = row['negative_vec'].loc[n]
         assert len(neg_ents) == len(neg_vecs), "negative ents and vecs mush have same len"
         if len(neg_ents) == 0:
             negative_ents.append("none")
@@ -111,16 +112,15 @@ def gen_train_data(data, word_dict, char_dict, args):
         if len(word_tokenize(line)) > max_len:
             max_len = len(word_tokenize(line))
     entity_tensor = torch.rand(args.batch_size, max_len, args.entity_dim)
-    print entity_tensor.size()
+    #print entity_tensor.size()
+    #print type(entity_tensor)
     for i in range(0, args.batch_size):
         entities_vec = entities_vecs[i]
         pos = poses[i]
         pos = ast.literal_eval(pos)
-        for p in pos:
-            p = torch.LongTensor([p])
-            i = torch.LongTensor([i])
-            vt = torch.Tensor(entities_vec)
-            entity_tensor[i][p] = vt
+        print (pos)
+        for j in range(len(pos)):
+            entity_tensor[torch.LongTensor([i])][torch.LongTensor([pos[j]])] =torch.from_numpy(entities_vec)
     positive_entw_tensor = lines_to_word_tensor(positive_ents, word_dict)
     positive_entc_tensor = lines_to_char_tensor(positive_ents, char_dict)
     positive_ente_tensor = torch.Tensor(positive_vecs)
