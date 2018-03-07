@@ -83,6 +83,9 @@ def lines_to_word_tensor(lines, word_dict):
     max_len = 0
     for line in lines:
         #line = line.decode('utf8')
+        print (line)
+        if line is None:
+            continue
         if len(word_tokenize(line)) > max_len:
             max_len = len(word_tokenize(line))
     #print (max_len)
@@ -91,6 +94,8 @@ def lines_to_word_tensor(lines, word_dict):
     for li, line in enumerate(lines):
         #print (line)
         #line = line.decode('utf8')
+        if line is None:
+            continue
         line = word_tokenize(line)
         #print(line)
         for i, word in enumerate(line):
@@ -107,17 +112,23 @@ def lines_to_char_tensor(lines, char_dict):
     max_line_len = 0
     for line in lines:
         #line = line.decode('utf8')
+        if line is None:
+            continue
         if len(word_tokenize(line)) > max_line_len:
             max_line_len = len(word_tokenize(line))
     max_word_len = 0
     for line in lines:
         #line = line.decode('utf8')
+        if line is None:
+            continue
         for word in word_tokenize(line):
             if len(word) > max_word_len:
                 max_word_len = len(word)
     tensor = torch.LongTensor(len(lines), max_line_len, max_word_len).zero_()
     for li, line in enumerate(lines):
         #line = line.decode('utf8')
+        if line is None:
+            continue
         line = word_tokenize(line)
         for wi, word in enumerate(line):
             for ci, c in enumerate(word):
