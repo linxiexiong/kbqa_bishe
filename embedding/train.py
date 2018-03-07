@@ -10,6 +10,7 @@ from data_processing.mysql import MySQL
 from embedding.vocab import *
 import pandas as pd
 import argparse
+from embedding.gen_train_data import gen_train_data
 
 
 def load_data(file_name):
@@ -46,25 +47,31 @@ def train(args, word_dict, train_data):
     margin = 1
     mask = Variable(torch.rand(args.batch_size, 10))
 
-    def batch_train_entity(words, chars, entities, entities_p, entities_n):
+    def batch_train_entity(data_tensor):
         optimizer.zero_grad()
-        score_ep = qe_model(words, chars, entities, entities_p, mask)
-        score_en = qe_model(words, chars, entities, entities_n, mask)
+        score_ep = qe_model(data_tensor['qw'], data_tensor['qc'], data_tensor['entity'],
+                            data_tensor['positive_entw'], data_tensor['positive_entc'],
+                            data_tensor['positive_ente'], mask)
+        score_en = qe_model(data_tensor['qw'], data_tensor['qc'], data_tensor['entity'],
+                            data_tensor['negative_entw'], data_tensor['negative_entc'],
+                            data_tensor['negative_ente'], mask)
         loss_e = torch.mean(torch.clamp(margin + score_ep - score_en, min=0.0))
 
         loss_e.backward()
         optimizer.step()
         return score_en, score_ep, loss_e
     for epoch in range(args.epoch):
-        train_data = train_data.sample(frac=1).reset_index(drop=True)
-        words, chars, entities, entities_p, entities_n = gen_batch_train_data(args, train_data,
-                                                                              word_dict, char_dict)
-        score_n, score_p, loss = batch_train_entity(words, chars, entities, entities_p, entities_n)
+        #train_data = train_data.sample(frac=1).reset_index(drop=True)
+        # words, chars, entities, entities_p, entities_n = gen_batch_train_data(args, train_data,
+        #                                                                       word_dict, char_dict)
+        data_tensor = gen_train_data(train_data, word_dict, char_dict, args)
+        score_n, score_p, loss = batch_train_entity(data_tensor)
         print (score_n, score_p, loss)
 
 if __name__ == "__main__":
-    file_name = '../datas/sq_data_train.csv'
+    file_name = '../entity_link/head_10.csv'
     train_data = load_data(file_name)
+    train_data = train_data.fillna(value='NULL')
     question_datas = train_data['question'].tolist()
     entitty_datas = train_data['topic_words_names'].tolist()
     relation_datas = train_data['relation'].tolist()
@@ -74,7 +81,7 @@ if __name__ == "__main__":
     args.epoch = 10
     args.learning_rate = 0.05
     args.embedding_file = '../datas/glove.6B.50d.txt'
-    args.file_name = '../datas/sq_data_train.csv'
+    args.file_name = '../entity_link/head_10.csv'
 
     word_dict = buil_word_dict_simple(True, args.embedding_file,
                                 word_datas)
@@ -86,7 +93,7 @@ if __name__ == "__main__":
     args.char_vocab_size = 128
     args.char_hidden = 128
 
-    args.entity_dim = 100
+    args.entity_dim = 50
     args.entity_vocab_size = 10000
     args.entity_hidden = 256
     args.relation_hidden = 256
@@ -100,9 +107,6 @@ if __name__ == "__main__":
     args.concat_layers = True
     args.rnn_type = 'gru'
     args.rnn_padding = False
-
-
-
 
     char_dict = build_char_dict()
     train(args, word_dict, train_data)

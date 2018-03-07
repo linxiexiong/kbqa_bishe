@@ -17,8 +17,8 @@ class EntityModel(nn.Module):
         self.fc = nn.Linear((args.hidden_size*2*args.num_layers +
                              args.entity_hidden*2*args.num_layers+args.entity_dim), 1)
 
-    def forward(self, words, chars, entities, entity, mask):
-        ent_emb = self.entity_emb(words, chars, entity)
+    def forward(self, words, chars, entities, e_words, e_chars, entity, mask):
+        ent_emb = self.entity_emb(e_words, e_chars, entity)
         q_emb = self.question_emb(words, chars, entities, mask)
         print (ent_emb.size())
         print (q_emb.size())
@@ -34,9 +34,9 @@ class RelationModel(nn.Module):
         self.relation_emb = RelationEmb(args)
         self.fc = nn.Linear(args.char_dim+2*(args.embedding_dim+args.entity_dim), 1)
 
-    def forward(self, words, chars, entities, rel_emb, mask):
+    def forward(self, words, chars, entities, r_words, rel_emb, mask):
         q_emb = self.question_emb(words, chars, entities, mask)
-        r_emb = self.relation_emb(words, rel_emb)
+        r_emb = self.relation_emb(r_words, rel_emb)
         inputs = torch.cat([q_emb, r_emb], dim=1)
         score = self.fc(inputs)
         return score

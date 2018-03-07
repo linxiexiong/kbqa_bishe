@@ -40,6 +40,43 @@ def line_to_tensor(line, all_letters):
     return tensor
 
 
+def line_to_word_tensor(line, word_dict):
+    #print ([(line.split(' ')) for line in lines])
+    #max_len = max([len(line.split(' ')) for line in lines ])
+    max_len = len(word_tokenize(line))
+    #print (max_len)
+    #tensor = torch.zeros(len(lines), max_len)
+    tensor = torch.LongTensor(max_len).zero_()
+    line = word_tokenize(line)
+        #print(line)
+    for i, word in enumerate(line):
+            #print (word)
+        if word not in word_dict:
+            tensor[i] = 0
+            continue
+        tensor[i] = word_dict[word]
+    return Variable(tensor)
+
+def line_to_char_tensor(line, char_dict):
+    #max_line_len = max([len(line.split(' ')) for line in lines ])
+    max_line_len = len(word_tokenize(line))
+    max_word_len = 0
+
+    for word in word_tokenize(line):
+        if len(word) > max_word_len:
+            max_word_len = len(word)
+    tensor = torch.LongTensor(max_line_len, max_word_len).zero_()
+
+    line = word_tokenize(line)
+    for wi, word in enumerate(line):
+        for ci, c in enumerate(word):
+            if c not in char_dict:
+                tensor[wi][ci] = 0
+                continue
+            tensor[wi][ci] = char_dict[c]
+    return Variable(tensor)
+
+
 def lines_to_word_tensor(lines, word_dict):
     #print ([(line.split(' ')) for line in lines])
     #max_len = max([len(line.split(' ')) for line in lines ])
@@ -163,4 +200,4 @@ def get_batch_datas(train_data, word_dict, char_dict):
     return questions, labels, label_tensor, qw_tensor, qc_tensor
 
 
-data_handle('type_test.csv')
+#data_handle('type_test.csv')

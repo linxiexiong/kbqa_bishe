@@ -23,3 +23,13 @@ class MySQL(object):
         self.cursor.close()
         self.connect.close()
         logging.INFO("close db success")
+
+
+def get_mid_to_name_mysql(db_conn, mid):
+        table_name = 'mid2name'
+        query = "select name from %s where mid = '%s' " % (table_name, mid)
+        #print query
+        name = db_conn.search(query)
+        if name is not None and len(name) >= 1:
+            return name[0]
+        return None
