@@ -232,13 +232,13 @@ def feature_select(sq_datas):
 
 
     # sq_datas['qid'] = sq_datas.index
-    sq_datas['token_question'] = sq_datas['question'].apply(lambda x: word_tokenize(x))
-    tf = sq_datas.token_question.apply(pd.value_counts).fillna(0)
-    idf = np.log((len(sq_datas) + 1) / (tf.gt(0).sum() + 1))
-    tf_idf = tf * idf
-    sq_datas['tf_idf'] = sq_datas.apply(lambda x: get_tf_idf(x.topic_words_names,
-                                                             x.qid,
-                                                             tf_idf), axis=1)
+    # sq_datas['token_question'] = sq_datas['question'].apply(lambda x: word_tokenize(x))
+    # tf = sq_datas.token_question.apply(pd.value_counts).fillna(0)
+    # idf = np.log((len(sq_datas) + 1) / (tf.gt(0).sum() + 1))
+    # tf_idf = tf * idf
+    # sq_datas['tf_idf'] = sq_datas.apply(lambda x: get_tf_idf(x.topic_words_names,
+    #                                                          x.qid,
+    #                                                          tf_idf), axis=1)
 
     db_conn = MySQL(ip='10.61.2.166', port=3306, user='zengyutao',
                                   pw='zengyutao', db_name='wikidata')

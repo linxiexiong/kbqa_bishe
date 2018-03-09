@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="48d53bde-ed3f-47d1-b2af-1d7f946b3f85" name="sftp" url="http://10.60.1.82">
+        <fileTransfer host="10.60.1.82" port="22" rootFolder="/home/jinxiaolong/linxx/" accessType="SFTP" password="dfc3dfc9dfdedfeadfc9dfc6dfc0" username="jinxiaolong">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
