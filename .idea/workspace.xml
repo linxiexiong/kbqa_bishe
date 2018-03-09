@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c76964f7-c94d-4edc-8863-41fb6d79ef5b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/entity_link/data_convert.sh" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/type_handle/type_valid.csv" afterPath="$PROJECT_DIR$/type_handle/type_valid.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data_processing/data_observed.py" afterPath="$PROJECT_DIR$/data_processing/data_observed.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data_processing/mysql.py" afterPath="$PROJECT_DIR$/data_processing/mysql.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/embedding/qa_model.py" afterPath="$PROJECT_DIR$/embedding/qa_model.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/embedding/train.py" afterPath="$PROJECT_DIR$/embedding/train.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/entity_link/entity_linking.py" afterPath="$PROJECT_DIR$/entity_link/entity_linking.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/type_handle/char-typernn-classification.pt" afterPath="$PROJECT_DIR$/type_handle/char-typernn-classification.pt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/type_handle/data_handle.py" afterPath="$PROJECT_DIR$/type_handle/data_handle.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/type_handle/type_train.csv" afterPath="$PROJECT_DIR$/type_handle/type_train.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/entity_link/features.py" afterPath="$PROJECT_DIR$/entity_link/features.py" />
     </list>
     <ignored path="kbqa_bishe.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,17 +18,17 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/kbqa_bishe$model.coverage" NAME="model Coverage Results" MODIFIED="1520321449579" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/type_handle" />
     <SUITE FILE_PATH="coverage/kbqa_bishe$utils.coverage" NAME="utils Coverage Results" MODIFIED="1516940244810" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/kbqa_bishe$gen_feature.coverage" NAME="gen_feature Coverage Results" MODIFIED="1520346619567" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/entity_link" />
-    <SUITE FILE_PATH="coverage/kbqa_bishe$entity_linking.coverage" NAME="entity_linking Coverage Results" MODIFIED="1520351800738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/entity_link" />
+    <SUITE FILE_PATH="coverage/kbqa_bishe$gen_feature.coverage" NAME="gen_feature Coverage Results" MODIFIED="1520583760765" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/entity_link" />
+    <SUITE FILE_PATH="coverage/kbqa_bishe$entity_linking.coverage" NAME="entity_linking Coverage Results" MODIFIED="1520586451829" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/entity_link" />
     <SUITE FILE_PATH="coverage/kbqa_bishe$train_data_gen.coverage" NAME="train_data_gen Coverage Results" MODIFIED="1520067898770" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/type_handle" />
     <SUITE FILE_PATH="coverage/kbqa_bishe$torchtext.coverage" NAME="torchtext Coverage Results" MODIFIED="1520067460753" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/type_handle" />
     <SUITE FILE_PATH="coverage/kbqa_bishe$fb_search.coverage" NAME="fb_search Coverage Results" MODIFIED="1514295498752" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/kbqa_bishe$convert_data.coverage" NAME="convert_data Coverage Results" MODIFIED="1520346627357" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/entity_link" />
+    <SUITE FILE_PATH="coverage/kbqa_bishe$convert_data.coverage" NAME="convert_data Coverage Results" MODIFIED="1520582437712" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/entity_link" />
     <SUITE FILE_PATH="coverage/kbqa_bishe$data_handle.coverage" NAME="data_handle Coverage Results" MODIFIED="1520164891049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/type_handle" />
-    <SUITE FILE_PATH="coverage/kbqa_bishe$data_observed.coverage" NAME="data_observed Coverage Results" MODIFIED="1520429747182" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_processing" />
+    <SUITE FILE_PATH="coverage/kbqa_bishe$data_observed.coverage" NAME="data_observed Coverage Results" MODIFIED="1520477556713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_processing" />
     <SUITE FILE_PATH="coverage/kbqa_bishe$features.coverage" NAME="features Coverage Results" MODIFIED="1516692309492" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/entity_link" />
     <SUITE FILE_PATH="coverage/kbqa_bishe$predict.coverage" NAME="predict Coverage Results" MODIFIED="1520166360955" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/type_handle" />
-    <SUITE FILE_PATH="coverage/kbqa_bishe$train.coverage" NAME="train Coverage Results" MODIFIED="1520432191456" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/embedding" />
+    <SUITE FILE_PATH="coverage/kbqa_bishe$train.coverage" NAME="train Coverage Results" MODIFIED="1520586466209" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/embedding" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -49,14 +39,48 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="mysql.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data_processing/mysql.py">
+      <file leaf-file-name="load_datas.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data_processing/load_datas.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+              <caret line="54" column="68" selection-start-line="54" selection-start-column="47" selection-end-line="54" selection-end-column="68" />
               <folding>
-                <element signature="e#23#44#0" expanded="true" />
-                <marker date="1520431255364" expanded="true" signature="787:823" placeholder="select name missing_value" />
+                <marker date="1520596120377" expanded="true" signature="7735:7771" placeholder="select name missing_value" />
+                <marker date="1520596120377" expanded="true" signature="8044:8088" placeholder="select notab... missing_value" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gen_feature.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/entity_link/gen_feature.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="basic.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/embedding/basic.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="features.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/entity_link/features.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.43396226">
+              <caret line="253" column="25" selection-start-line="253" selection-start-column="25" selection-end-line="253" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#65#0" expanded="true" />
+                <marker date="1520596226983" expanded="true" signature="6829:6867" placeholder="select vecto... missing_value" />
+                <marker date="1520596226983" expanded="true" signature="7100:7144" placeholder="select notab... missing_value" />
               </folding>
             </state>
           </provider>
@@ -66,12 +90,23 @@
         <entry file="file://$PROJECT_DIR$/data_processing/data_observed.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="225" column="0" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
+              <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1520431255363" expanded="true" signature="3078:3114" placeholder="select name missing_value" />
-                <marker date="1520431255363" expanded="true" signature="4586:4622" placeholder="select name missing_value" />
+                <marker date="1520477556000" expanded="true" signature="3078:3114" placeholder="select name missing_value" />
+                <marker date="1520477556000" expanded="true" signature="4578:4614" placeholder="select name missing_value" />
+                <marker date="1520477556000" expanded="true" signature="5408:5452" placeholder="select relat... missing_value" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="convert_data.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/entity_link/convert_data.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -80,7 +115,7 @@
         <entry file="file://$PROJECT_DIR$/embedding/train.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="95" column="24" selection-start-line="95" selection-start-column="24" selection-end-line="95" selection-end-column="24" />
+              <caret line="74" column="52" selection-start-line="74" selection-start-column="52" selection-end-line="74" selection-end-column="52" />
               <folding>
                 <element signature="e#0#12#0" expanded="true" />
               </folding>
@@ -88,45 +123,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vocab.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/embedding/vocab.py">
+      <file leaf-file-name="mysql.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data_processing/mysql.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="40" column="22" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
+              <caret line="21" column="18" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="18" />
               <folding>
-                <marker date="1520428976030" expanded="true" signature="0:84" placeholder="import ..." />
+                <element signature="e#23#44#0" expanded="true" />
+                <marker date="1520472819000" expanded="true" signature="1029:1065" placeholder="select name missing_value" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="question_emb.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/embedding/question_emb.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="52" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="qa_model.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/embedding/qa_model.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="45" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
-              <folding>
-                <element signature="e#0#12#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gen_train_data.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="gen_train_data.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/embedding/gen_train_data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8292683">
-              <caret line="121" column="43" selection-start-line="121" selection-start-column="43" selection-end-line="121" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="71" column="21" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -136,30 +150,7 @@
         <entry file="file://$PROJECT_DIR$/entity_link/entity_linking.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="45" column="42" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train_data_gen.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/type_handle/train_data_gen.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#65#0" expanded="true" />
-                <marker date="1520346799558" expanded="true" signature="309:345" placeholder="select name missing_value" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="data_handle.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/type_handle/data_handle.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="147" column="0" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+              <caret line="66" column="20" selection-start-line="66" selection-start-column="20" selection-end-line="66" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -199,7 +190,6 @@
         <option value="$PROJECT_DIR$/embedding/question_emb.py" />
         <option value="$PROJECT_DIR$/type_handle/type_rnn.py" />
         <option value="$PROJECT_DIR$/data_processing/load_datas.py" />
-        <option value="$PROJECT_DIR$/entity_link/features.py" />
         <option value="$PROJECT_DIR$/entity_link/convert_data.py" />
         <option value="$PROJECT_DIR$/entity_link/entity_linking.py" />
         <option value="$PROJECT_DIR$/data_processing/mysql.py" />
@@ -209,6 +199,7 @@
         <option value="$PROJECT_DIR$/embedding/train.py" />
         <option value="$PROJECT_DIR$/embedding/qa_model.py" />
         <option value="$PROJECT_DIR$/embedding/gen_train_data.py" />
+        <option value="$PROJECT_DIR$/entity_link/features.py" />
       </list>
     </option>
   </component>
@@ -218,8 +209,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="98" />
-    <option name="y" value="28" />
+    <option name="x" value="51" />
+    <option name="y" value="149" />
     <option name="width" value="1057" />
     <option name="height" value="660" />
   </component>
@@ -688,18 +679,19 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="98" y="28" width="1057" height="660" extended-state="0" />
+    <frame x="51" y="149" width="1057" height="660" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27487683" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33086053" sideWeight="0.503305" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32982457" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4473684" sideWeight="0.49669498" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24929178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39298245" sideWeight="0.49669498" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27487683" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24929178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Concurrent Activities Diagram" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32896653" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39858907" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -754,13 +746,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="113" selection-start-line="11" selection-start-column="113" selection-end-line="11" selection-end-column="113" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Library/Python/2.7/site-packages/nltk/tokenize/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -882,7 +867,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding>
-            <marker date="1520076226773" expanded="true" signature="197:233" placeholder="select name missing_value" />
+            <marker date="1520076226000" expanded="true" signature="197:233" placeholder="select name missing_value" />
           </folding>
         </state>
       </provider>
@@ -992,14 +977,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/embedding/basic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="8" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/type_handle/type_rnn.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1016,61 +993,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/entity_link/convert_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Library/Python/2.7/site-packages/sklearn/preprocessing/label.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/entity_link/gen_feature.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_processing/load_datas.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="130" column="19" selection-start-line="130" selection-start-column="19" selection-end-line="130" selection-end-column="19" />
-          <folding>
-            <marker date="1520346733224" expanded="true" signature="5361:5397" placeholder="select name missing_value" />
-            <marker date="1520346733224" expanded="true" signature="5670:5714" placeholder="select notab... missing_value" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/entity_link/features.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="80" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#65#0" expanded="true" />
-            <marker date="1520346455185" expanded="true" signature="6829:6867" placeholder="select vecto... missing_value" />
-            <marker date="1520346455185" expanded="true" signature="7100:7144" placeholder="select notab... missing_value" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_processing/mysql.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding>
-            <element signature="e#23#44#0" expanded="true" />
-            <marker date="1520431255364" expanded="true" signature="787:823" placeholder="select name missing_value" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1080,7 +1007,7 @@
           <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
           <folding>
             <element signature="e#0#65#0" expanded="true" />
-            <marker date="1520346799558" expanded="true" signature="309:345" placeholder="select name missing_value" />
+            <marker date="1520346799000" expanded="true" signature="309:345" placeholder="select name missing_value" />
           </folding>
         </state>
       </provider>
@@ -1093,38 +1020,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/type_handle/data_handle.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="147" column="0" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/embedding/vocab.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="40" column="22" selection-start-line="40" selection-start-column="22" selection-end-line="40" selection-end-column="22" />
           <folding>
-            <marker date="1520428976030" expanded="true" signature="0:84" placeholder="import ..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/entity_link/entity_linking.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="42" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/embedding/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="95" column="24" selection-start-line="95" selection-start-column="24" selection-end-line="95" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
+            <marker date="1520428976000" expanded="true" signature="0:84" placeholder="import ..." />
           </folding>
         </state>
       </provider>
@@ -1134,7 +1035,53 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="31" column="45" selection-start-line="31" selection-start-column="45" selection-end-line="31" selection-end-column="45" />
           <folding>
-            <element signature="e#0#12#0" expanded="true" />
+            <element signature="e#0#12#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Python/2.7/site-packages/nltk/tokenize/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/type_handle/data_handle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="214" column="0" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_processing/mysql.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="18" selection-start-line="21" selection-start-column="8" selection-end-line="21" selection-end-column="18" />
+          <folding>
+            <element signature="e#23#44#0" expanded="true" />
+            <marker date="1520472819000" expanded="true" signature="1029:1065" placeholder="select name missing_value" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/embedding/basic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_processing/load_datas.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="54" column="68" selection-start-line="54" selection-start-column="47" selection-end-line="54" selection-end-column="68" />
+          <folding>
+            <marker date="1520596120377" expanded="true" signature="7735:7771" placeholder="select name missing_value" />
+            <marker date="1520596120377" expanded="true" signature="8044:8088" placeholder="select notab... missing_value" />
           </folding>
         </state>
       </provider>
@@ -1142,20 +1089,67 @@
     <entry file="file://$PROJECT_DIR$/data_processing/data_observed.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="225" column="0" selection-start-line="225" selection-start-column="0" selection-end-line="225" selection-end-column="0" />
+          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
-            <marker date="1520431255363" expanded="true" signature="3078:3114" placeholder="select name missing_value" />
-            <marker date="1520431255363" expanded="true" signature="4586:4622" placeholder="select name missing_value" />
+            <marker date="1520477556000" expanded="true" signature="3078:3114" placeholder="select name missing_value" />
+            <marker date="1520477556000" expanded="true" signature="4578:4614" placeholder="select name missing_value" />
+            <marker date="1520477556000" expanded="true" signature="5408:5452" placeholder="select relat... missing_value" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/entity_link/convert_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/embedding/gen_train_data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8292683">
-          <caret line="121" column="43" selection-start-line="121" selection-start-column="43" selection-end-line="121" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="71" column="21" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/entity_link/entity_linking.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="66" column="20" selection-start-line="66" selection-start-column="20" selection-end-line="66" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/embedding/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="74" column="52" selection-start-line="74" selection-start-column="52" selection-end-line="74" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/entity_link/gen_feature.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="24" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/entity_link/features.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43396226">
+          <caret line="253" column="25" selection-start-line="253" selection-start-column="25" selection-end-line="253" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#65#0" expanded="true" />
+            <marker date="1520596226983" expanded="true" signature="6829:6867" placeholder="select vecto... missing_value" />
+            <marker date="1520596226983" expanded="true" signature="7100:7144" placeholder="select notab... missing_value" />
+          </folding>
         </state>
       </provider>
     </entry>
