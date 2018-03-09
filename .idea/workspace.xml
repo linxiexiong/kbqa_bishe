@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c76964f7-c94d-4edc-8863-41fb6d79ef5b" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/embedding/gen_train_data.py" afterPath="$PROJECT_DIR$/embedding/gen_train_data.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/entity_link/features.py" afterPath="$PROJECT_DIR$/entity_link/features.py" />
     </list>
     <ignored path="kbqa_bishe.iws" />
@@ -75,12 +76,12 @@
       <file leaf-file-name="features.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/entity_link/features.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43396226">
-              <caret line="253" column="25" selection-start-line="253" selection-start-column="25" selection-end-line="253" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.7169811">
+              <caret line="210" column="14" selection-start-line="210" selection-start-column="14" selection-end-line="210" selection-end-column="14" />
               <folding>
                 <element signature="e#0#65#0" expanded="true" />
-                <marker date="1520596226983" expanded="true" signature="6829:6867" placeholder="select vecto... missing_value" />
-                <marker date="1520596226983" expanded="true" signature="7100:7144" placeholder="select notab... missing_value" />
+                <marker date="1520599558275" expanded="true" signature="6829:6867" placeholder="select vecto... missing_value" />
+                <marker date="1520599558275" expanded="true" signature="7160:7204" placeholder="select notab... missing_value" />
               </folding>
             </state>
           </provider>
@@ -140,7 +141,7 @@
         <entry file="file://$PROJECT_DIR$/embedding/gen_train_data.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="71" column="21" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
+              <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -209,8 +210,8 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="51" />
-    <option name="y" value="149" />
+    <option name="x" value="120" />
+    <option name="y" value="91" />
     <option name="width" value="1057" />
     <option name="height" value="660" />
   </component>
@@ -679,7 +680,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="51" y="149" width="1057" height="660" extended-state="0" />
+    <frame x="120" y="91" width="1057" height="660" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1107,14 +1108,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/embedding/gen_train_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="21" selection-start-line="71" selection-start-column="21" selection-end-line="71" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/entity_link/entity_linking.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1133,6 +1126,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/embedding/gen_train_data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="26" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/entity_link/gen_feature.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1143,12 +1144,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/entity_link/features.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43396226">
-          <caret line="253" column="25" selection-start-line="253" selection-start-column="25" selection-end-line="253" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.7169811">
+          <caret line="210" column="14" selection-start-line="210" selection-start-column="14" selection-end-line="210" selection-end-column="14" />
           <folding>
             <element signature="e#0#65#0" expanded="true" />
-            <marker date="1520596226983" expanded="true" signature="6829:6867" placeholder="select vecto... missing_value" />
-            <marker date="1520596226983" expanded="true" signature="7100:7144" placeholder="select notab... missing_value" />
+            <marker date="1520599558275" expanded="true" signature="6829:6867" placeholder="select vecto... missing_value" />
+            <marker date="1520599558275" expanded="true" signature="7160:7204" placeholder="select notab... missing_value" />
           </folding>
         </state>
       </provider>

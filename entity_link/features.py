@@ -206,7 +206,9 @@ def get_entity_vector(conn, mid):
     # print (vector)
     if vector is not None and len(vector) >= 1:
         return vector[0]
-    return None
+    print (mid)
+    vec = ','.join(['0' for _ in range(50)])
+    return vec
 
 
 def mid_type(conn, mid):
@@ -250,7 +252,8 @@ def feature_select(sq_datas):
         vec_cols.append("vec_" + str(i))
     # print (sq_datas)
     print (len(sq_datas))
-    sq_datas[vec_cols] = sq_datas.dropna(axis=0, how='any')
+    #sq_datas[vec_cols] = sq_datas.dropna(axis=0, how='any')
+
     print (len(sq_datas))
     sq_datas[vec_cols] = pd.DataFrame(sq_datas['vector'].str.split(',').values.tolist())
     sq_datas[vec_cols] = sq_datas[vec_cols].astype(float)
