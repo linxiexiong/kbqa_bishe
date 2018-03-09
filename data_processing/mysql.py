@@ -19,6 +19,15 @@ class MySQL(object):
             traceback.print_exc()
             self.connect.rollback()
 
+    def search_all(self, query):
+        try:
+            self.cursor.execute(query)
+            result = self.cursor.fetchall()
+            return result
+        except:
+            traceback.print_exc()
+            self.connect.rollback()
+
     def close(self):
         self.cursor.close()
         self.connect.close()

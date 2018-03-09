@@ -11,14 +11,14 @@ import numpy as np
 import codecs
 from data_processing.mysql import MySQL
 import random
+from nltk.tokenize import word_tokenize
 
 
 class DataReader(object):
     def __init__(self, mid_name_file=None,
                  mid_qid_file=None,
                  topic_words_file=None,
-                 sq_data_file=None,
-                 tp_replace_file=None):
+                 sq_data_file=None):
         self.sq_dataset = pd.DataFrame()
         self.subject_ids = {}
         self.relations = {}
@@ -34,7 +34,7 @@ class DataReader(object):
         self.mid_qid_file = "../datas/fb2w.nt" if mid_qid_file is None else mid_qid_file
         self.topic_words_file = topic_words_file
         self.sq_data_file = sq_data_file
-        self.tp_replace_file = tp_replace_file
+        #self.tp_replace_file = tp_replace_file
         self.mid_name_dict, self.name_mid_dict = self.mid_name_convert(mid_name_file)
         self.db_conn = MySQL(ip='10.61.2.166', port=3306, user='zengyutao',
                                   pw='zengyutao', db_name='wikidata')
@@ -80,12 +80,76 @@ class DataReader(object):
         print ("load sq data with df done!")
 
     def load_topic_word_pos(self, sq_datas):
-        data = pd.read_csv(self.tp_replace_file, header=None, sep='\t')
-        data.columns = ['sid', 'canid', 'qr']
-        new_data = pd.concat([sq_datas, data], axis=1)
-        new_data['pos'] = new_data.apply(lambda x: self.get_topic_word_pos(x['question'],
-                                                                           x['qr']), axis=1)
-        return new_data
+        #data = pd.read_csv(self.tp_replace_file, header=None, sep='\t')
+        #data.columns = ['sid', 'canid', 'qr']
+        #new_data = pd.concat([sq_datas, data], axis=1)
+        sq_datas['pos'] = sq_datas.apply(lambda x: self.get_topic_word_pos_mid(x['question'],
+                                                                           x['subject_name'],
+                                                                           x['object_name']),
+                                         axis=1)
+        print sq_datas['pos']
+        return sq_datas
+    @staticmethod
+    def get_topic_word_pos_mid(question, sub_name, obj_name):
+        idxs = []
+
+        if question is None or sub_name is None or obj_name is None:
+            return idxs
+        question = question.lower()
+        sub_name = sub_name.lower()
+        obj_name = obj_name.lower()
+        part_in = False
+        #print question + "," + sub_name + ", " + obj_name
+        if sub_name in question:
+            golden_word = sub_name
+        elif obj_name in question:
+            golden_word = obj_name
+        else:
+            for word in question:
+                if word in sub_name:
+                    golden_word = sub_name
+                    part_in = True
+                    break
+                elif word in obj_name:
+                    golden_word = obj_name
+                    part_in = True
+                    break
+                else:
+                    print question + ', ' + sub_name + ',' + obj_name
+                    return idxs
+        question = word_tokenize(question)
+        golden_word = word_tokenize(golden_word)
+
+        gl = len(golden_word)
+        if part_in:
+            #print question, golden_word
+            cross = [w for w in golden_word if w in question]
+            #obj_cross = [w for w in obj_name if w in question]
+            #print len(sub_cross), len(obj_cross)
+            #print len(cross)
+            if len(cross) == 0:
+                return idxs
+            else:
+                for i, word in enumerate(question):
+                    if word in cross:
+                        idxs.append(i)
+            return idxs
+        if gl == 1:
+            #print golden_word
+            for i , word in enumerate(question):
+                if word == golden_word[0]:
+                    idxs.append(i)
+                    #print idxs
+                    return idxs
+        for i, word in enumerate(question):
+            if word == golden_word[0] and question[i + 1] == golden_word[1]:
+                idx = i
+                for inc in range(0, gl):
+                    pos = idx + inc
+                    idxs.append(pos)
+                return idxs
+        print ('=========================')
+        return idxs
 
     @staticmethod
     def get_topic_word_pos(str, str1):

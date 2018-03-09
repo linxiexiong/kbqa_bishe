@@ -119,13 +119,13 @@ def has_four(str):
 
 
 def get_mid_to_name_mysql(db_conn, mid):
-        table_name = 'mid2name'
-        query = "select name from %s where mid = '%s' " % (table_name, mid)
-        #print query
-        name = db_conn.search(query)
-        if name is not None and len(name) >= 1:
-            return name[0]
-        return None
+    table_name = 'mid2name'
+    query = "select name from %s where mid = '%s' " % (table_name, mid)
+    #print query
+    name = db_conn.search(query)
+    if name is not None and len(name) >= 1:
+        return name[0]
+    return None
 
 def mul_vec(weight, vectors):
     assert len(weight) == len(vectors) , "must the same length"
@@ -147,6 +147,16 @@ def mul_vec(weight, vectors):
 
     vec = np.sum(new_vecs, axis=1)
     return vec
+
+
+def get_relations(db_conn, mid):
+    table_name = 'SimpleQuestions'
+    query = "select relation from %s where subject = '%s'; " % (table_name, mid)
+    #print query
+    name = db_conn.search_all(query)
+    if name is not None and len(name) >= 1:
+        return name
+    return None
 
 data = pd.read_csv('../entity_link/head_10.csv')
 data = data.sort_values(['qid', 'predict'], ascending=[True, False]).reset_index(drop=True)
@@ -202,7 +212,12 @@ for i in range(qid_max+1):
     positive_mid = data.loc[data['qid'] == i, 'golden_word'].iloc[0]
     positive_vec = cand_vec_dict[positive_mid]
     neg_vec = [cand_vec_dict[neg_mid] for neg_mid in cand_mid if neg_mid != positive_mid]
+
     neg = [get_mid_to_name_mysql(db_conn, neg_mid) for neg_mid in cand_mid if neg_mid != positive_mid]
+    rel = [get_relations(db_conn, mid) for mid in cand_mid]
+    print cand_mid
+    print rel
+    print get_relations(db_conn, '/m/02cft')
     train['negtive'].append(neg)
     #print len(cand_id),len(neg_vec)
     train['positive_vec'].append(positive_vec)
@@ -214,12 +229,13 @@ for key in train:
     #print (key)
     train_data[key] = train.get(key)
 
+print (train_data[train_data.query('what' in train_data['question'])])
 #print train_data[:10]
 #lst_cols = ['negtive', 'negative_vec']
 for i in range(len(train_data)):
     row = train_data.loc[[i]]
-    print row['question']
-    print(row['question'].tolist())
+    #print row['question']
+    #print(row['question'].tolist())
 #w_sq_datas = explode(df, lst_cols, fill_value='')
 #print w_sq_datas
     #entity =

@@ -13,13 +13,14 @@ def convert_data(argv):
     topic_words_file = argv[0]
     sq_data_file = argv[1]
     output_file = argv[2]
-    tp_replace_file = argv[3]
-    stage = argv[4]
+    #tp_replace_file = argv[3]
+    stage = argv[3]
     datas = DataReader(mid_name_file, mid_qid_file,
-                       topic_words_file, sq_data_file, tp_replace_file)
+                       topic_words_file, sq_data_file)
     datas.read_sq_data_pd()
-    sq_datas = datas.load_topic_word_pos(datas.sq_dataset)
-    sq_datas = datas.load_topic_words(stage, sq_datas)
+
+    sq_datas = datas.load_topic_words(stage, datas.sq_dataset)
+    sq_datas = datas.load_topic_word_pos(sq_datas)
     sq_datas_whole = whole_sample(sq_datas)
     # sq_datas.fillna(value='')
     sq_datas_whole.to_csv(output_file, index=False, encoding='utf8')
