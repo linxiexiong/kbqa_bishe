@@ -221,7 +221,8 @@ def mid_type(conn, mid):
 
 def feature_select(sq_datas):
     feature_columns = ['lcs_pq', 'lcs_pe', 'lcw_pq', 'lcw_pe', 'word_score']
-
+    sq_datas['question'] = sq_datas['question'].fillna(value='none')
+    sq_datas['topic_words_names'] = sq_datas['topic_words_names'].fillna(value='none')
     sq_datas['lcs_pq'] = sq_datas.apply(get_lcs_pq, axis=1)
     sq_datas['lcs_pe'] = sq_datas.apply(get_lcs_pe, axis=1)
     sq_datas['lcw_pq'] = sq_datas.apply(get_lcw_pq, axis=1)
