@@ -29,26 +29,29 @@ def entity_linking():
     #test_features, test_label = feature_select(sq_data_test_with_ns)
     train_features_file = '../datas/features/small_train_100_features.csv'
     train_label_file = '../datas/features/small_train_labels.csv'
-    #test_features_file = '../datas/features/small_test_features.csv'
-    #test_label_file = '../datas/features/small_test_labels.csv'
+    test_features_file = '../datas/features/small_test_100_features.csv'
+    test_label_file = '../datas/features/small_test_labels.csv'
     train_features = pd.read_csv(train_features_file)
     train_label = pd.read_csv(train_label_file, header=None)
     print (len(train_features), len(train_label))
-    #test_features = pd.read_csv(test_features_file)
-    #test_label = pd.read_csv(test_label_file)
-    sq_data_test_with_ns = pd.read_csv('../datas/train_100.csv')
+    test_features = pd.read_csv(test_features_file)
+    test_label = pd.read_csv(test_label_file)
+    sq_data_test_with_ns = pd.read_csv('../datas/test_100.csv')
+    sq_data_train_with_ns = pd.read_csv('../datas/train_100.csv')
+    train_features, test_features = fix_columns(train_features, test_features)
     #train_features, test_features = fix_columns(train_features, test_features)
-    train_features, test_features = fix_columns(train_features, train_features)
     print (len(train_features), len(test_features))
     #sq_data_test = data_load("test")
-    xgb = XGBoostModel(max_depth=4,
+    xgb = XGBoostModel(max_depth=3,
                        learning_rate=0.05,
                        n_estimators=200).xgb_classifier()
     clf = xgb.fit(train_features, train_label)
     predict = clf.predict_proba(test_features)
+    predict_train = clf.predict_proba(train_features)
     #print predict
     print (len(sq_data_test_with_ns))
     sq_data_test_with_ns['predict'] = predict[:, 1]
+    sq_data_train_with_ns['predict'] = predict_train[:, 1]
     #sq_data_test_with_ns['word_score_sum'] = sq_data_test_with_ns.groupby('qid').agg({'word_score': sum})
     #sq_data_test_with_ns['word_score_norm'] = sq_data_test_with_ns.apply(
     #        lambda x: x['word_score'] / x['word_score_sum'] if x['word_score_sum'] != 0 else 0, axis=1)
@@ -57,21 +60,24 @@ def entity_linking():
     #sq_data_test_with_ns['score'] = sq_data_test_with_ns.apply(
     #    lambda x: float(x['predict']) + float(x['word_score']), axis=1)
 
-    hit1 = evaluate(sq_data_test_with_ns, 1)
-    hit5 = evaluate(sq_data_test_with_ns, 5)
-    hit10 = evaluate(sq_data_test_with_ns, 10)
-    print (hit1, hit5, hit10)
+    hit1 = evaluate(sq_data_test_with_ns, 1, 'test')
+    hit5 = evaluate(sq_data_test_with_ns, 5, 'test')
+    hit10 = evaluate(sq_data_test_with_ns, 10, 'test')
+    hitt1 = evaluate(sq_data_train_with_ns, 1, 'train')
+    hitt5 = evaluate(sq_data_train_with_ns, 5, 'train')
+    hitt10 = evaluate(sq_data_train_with_ns, 10, 'train')
+    print (hit1, hit5, hit10, hitt1, hitt5, hitt10)
     #print log_loss(sq_data_valid_with_ns['label'], predict)
 
 
-def evaluate(df, n):
+def evaluate(df, n, stage):
     df = df.sort_values(['predict'], ascending=False).groupby('qid').head(n)
-    df.to_csv('head_' + str(n) + ".csv", index=False)
+    df.to_csv(stage + '_head_' + str(n) + ".csv", index=False)
     df['is_equal'] = df.apply(lambda x: 1 if x['golden_word'] == x['topic_words'] else 0, axis=1)
     dff = df.groupby(['qid'], as_index=False).agg({'is_equal': sum})
     dff[dff.is_equal == 0].to_csv('error_sample.csv')
     #df[df.qid == dff[dff.is_equal == 0].qid].to_csv('error_example')
-    print np.sum(dff['is_equal'])
+    print (np.sum(dff['is_equal']))
     if len(dff) == 0:
         return 0
     return sum(dff['is_equal']) / len(dff)
