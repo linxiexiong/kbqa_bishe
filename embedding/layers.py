@@ -150,13 +150,13 @@ class SimpleRNN(nn.Module):
                                    args.hidden_size,
                                    num_layers=args.num_layers,
                                    batch_first=True, bidirectional=True)
-        self.word_rnn_init_h = nn.Parameter(torch.randn(2 * args.num_layers,
-                                                        args.batch_size,
-                                                        args.hidden_size).type(torch.FloatTensor),
-                                            )
+        # self.word_rnn_init_h = nn.Parameter(torch.randn(2 * args.num_layers,
+        #                                                 args.batch_size,
+        #                                                 args.hidden_size).type(torch.FloatTensor),
+        #                                     )
 
     def forward(self, emb):
         #print (out[0][0])
-        _, sent_hidden = self.sentence_rnn(emb, self.word_rnn_init_h)
+        _, sent_hidden = self.sentence_rnn(emb)
         out = torch.cat(list(sent_hidden), dim=1)
         return out

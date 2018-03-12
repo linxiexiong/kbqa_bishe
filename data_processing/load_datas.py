@@ -87,7 +87,7 @@ class DataReader(object):
                                                                            x['subject_name'],
                                                                            x['object_name']),
                                          axis=1)
-        print sq_datas['pos']
+        #print (sq_datas['pos'])
         return sq_datas
     @staticmethod
     def get_topic_word_pos_mid(question, sub_name, obj_name):
@@ -115,7 +115,7 @@ class DataReader(object):
                     part_in = True
                     break
                 else:
-                    print question + ', ' + sub_name + ',' + obj_name
+                    #print question + ', ' + sub_name + ',' + obj_name
                     return idxs
         question = word_tokenize(question)
         golden_word = word_tokenize(golden_word)
@@ -148,6 +148,7 @@ class DataReader(object):
                     pos = idx + inc
                     idxs.append(pos)
                 return idxs
+        print (question + "," + sub_name + ", " + obj_name)
         print ('=========================')
         return idxs
 

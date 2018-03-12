@@ -51,10 +51,10 @@ def build_word_dict(restrict_vocab, embedding_file, examples):
     return word_dict
 
 
-def buil_word_dict_simple(restrict_vocab, emdedding_file, examples):
+def buil_word_dict_simple(restrict_vocab, embedding_file, examples):
     word_dict = dict()
     index = 0
-    for w in load_words(restrict_vocab, emdedding_file, examples):
+    for w in load_words(restrict_vocab, embedding_file, examples):
         word_dict[w] = index
         index += 1
     return word_dict
@@ -62,7 +62,7 @@ def buil_word_dict_simple(restrict_vocab, emdedding_file, examples):
 
 def load_embeddings(words, word_dict, embedding_file, network):
     words = {w for w in words if w in word_dict}
-    print (len(words))
+    #print (len(words))
     embedding = network.word_emb.weight.data
     vec_counts = {}
     with open(embedding_file) as f:
@@ -87,7 +87,7 @@ def load_pretrain_embedding(words, word_dict, embedding_file, dim):
     #print (words)
     words = {w for w in words if w in word_dict}
 
-    print (len(words))
+    #print (len(words))
     embedding = torch.rand(len(word_dict), dim)
     #print (words)
     with open(embedding_file) as f:

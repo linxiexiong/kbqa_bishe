@@ -41,10 +41,10 @@ class TypeRNN(nn.Module):
                                    num_layers=args.num_layer,
                                    batch_first=True, bidirectional=True)
         self.fc = nn.Linear(args.sent_hidden * 2 * args.num_layer, args.num_label)
-        self.word_rnn_init_h = nn.Parameter(torch.randn(2 * 3,
-                                                        args.batch_size,
-                                                        args.sent_hidden).type(torch.FloatTensor),
-                                            )
+        # self.word_rnn_init_h = nn.Parameter(torch.randn(2 * 3,
+        #                                                 args.batch_size,
+        #                                                 args.sent_hidden).type(torch.FloatTensor),
+        #                                     )
 
     def forward(self, words, chars):
         #print (words)
@@ -64,7 +64,7 @@ class TypeRNN(nn.Module):
         out = torch.cat([word_emb, char_out], dim=2)
         #print (out.size())
         #print (out[0][0])
-        _, sent_hidden = self.sentence_rnn(out, self.word_rnn_init_h)
+        _, sent_hidden = self.sentence_rnn(out)
         out = torch.cat(list(sent_hidden), dim=1)
         output = self.fc(out)
         if self.training:

@@ -10,7 +10,7 @@ from data_processing.mysql import MySQL
 from embedding.vocab import *
 import pandas as pd
 import argparse
-from embedding.gen_train_data import gen_train_data
+from embedding.gen_train_data import gen_train_data, prepair_data, gen_simgle_test_data
 
 
 def load_data(file_name):
@@ -46,7 +46,8 @@ def train(args, word_dict, train_data):
                                     lr=args.learning_rate)
     margin = 1
     mask = Variable(torch.rand(args.batch_size, 10))
-
+    train_data = prepair_data(train_data)
+    #print (qe_model.state_dict())
     def batch_train_entity(data_tensor):
         optimizer.zero_grad()
         score_ep = qe_model(data_tensor['qw'], data_tensor['qc'], data_tensor['entity'],
@@ -64,24 +65,65 @@ def train(args, word_dict, train_data):
         #train_data = train_data.sample(frac=1).reset_index(drop=True)
         # words, chars, entities, entities_p, entities_n = gen_batch_train_data(args, train_data,
         #                                                                       word_dict, char_dict)
+
         data_tensor = gen_train_data(train_data, word_dict, char_dict, args)
         score_n, score_p, loss = batch_train_entity(data_tensor)
         print (score_n, score_p, loss)
+    return qe_model
+
+
+def predict(model, word_dict, char_dict, test_data):
+    qid_max = max(test_data['qid'].tolist())
+    mask = Variable(torch.rand(args.batch_size, 10))
+    cnt = 0
+    for i in range(qid_max):
+        data_tensor = gen_simgle_test_data(test_data, word_dict, char_dict, i, entity_dim=50)
+        qw = data_tensor['qw_tensor']
+        qc = data_tensor['qc_tensor']
+        entity = data_tensor['entity_tensor']
+        candw_tensor = data_tensor['candw_tensor']
+        candc_tensor = data_tensor['candc_tensor']
+        cande_tensor = data_tensor['cande_tensor']
+        cand_ents = data_tensor['cand_mid']
+        #cand_vecs = data_tensor['cand_vecs']
+        cand_score = dict()
+        cand_gold = (data_tensor['golden'])
+        max_score = 0.0
+        for idx, cand in enumerate(cand_ents):
+
+            scores = model(qw, qc, entity,
+                            candw_tensor[idx], candc_tensor[idx],
+                            cande_tensor[idx], mask)
+            print (scores)
+            s = float(scores.data.numpy()[0])
+            print (type(s))
+            if s > max_score:
+                max_score = s
+                max_cand = cand
+            cand_score[cand] = scores
+        print (max_cand, cand_gold)
+        if max_cand == cand_gold:
+            cnt += 1
+    print (cnt, qid_max)
+    #print (cand_score)
+    print ("predict done")
+
 
 if __name__ == "__main__":
-    file_name = '../entity_link/head_10.csv'
+    file_name = '../entity_link/train_head_10.csv'
     train_data = load_data(file_name)
-    train_data = train_data.fillna(value='NULL')
+    train_data = train_data.fillna(value='none')
+    #train_data = train_data['topic_words_names'].fillna(value='none')
     question_datas = train_data['question'].tolist()
     entitty_datas = train_data['topic_words_names'].tolist()
     relation_datas = train_data['relation'].tolist()
     word_datas = question_datas + entitty_datas + relation_datas
     args = argparse.Namespace()
-    args.batch_size = 32
+    args.batch_size = 1
     args.epoch = 10
-    args.learning_rate = 0.05
+    args.learning_rate = 0.02
     args.embedding_file = '../datas/glove.6B.50d.txt'
-    args.file_name = '../entity_link/head_10.csv'
+    args.file_name = '../entity_link/train_head_10.csv'
 
     word_dict = buil_word_dict_simple(True, args.embedding_file,
                                 word_datas)
@@ -109,8 +151,13 @@ if __name__ == "__main__":
     args.rnn_padding = False
 
     char_dict = build_char_dict()
-    train(args, word_dict, train_data)
-
+    model = train(args, word_dict, train_data)
+    print ("train done =============================")
+    model.eval()
+    test_data = pd.read_csv('../entity_link/test_head_10.csv')
+    test_data = test_data.fillna(value='none')
+    #test_data = test_data['topic_words_names'].fillna(value='none')
+    predict(model, word_dict, char_dict, test_data)
 
 
 

@@ -10,14 +10,14 @@ from data_handle import *
 import time
 import math
 import argparse
-from embedding.vocab import load_embeddings, build_word_dict, index_embedding_words
+from embedding.vocab import *
 
 
 n_letters, categories, n_categories = get_len('type_test.csv')
 print (n_letters, categories, n_categories)
 
 train_data = data_handle('type_test.csv')
-word_dict = build_word_dict(restrict_vocab=True,
+word_dict = buil_word_dict_simple(restrict_vocab=True,
                                 embedding_file='../datas/glove.6B.50d.txt',
                                 examples=train_data['question'])
 embedding_file = '../datas/glove.6B.50d.txt'
@@ -44,7 +44,7 @@ args.dropout = 0.8
 args.num_layer = 3
 
 rnn = TypeRNN(args)
-load_embeddings(words, word_dict, embedding_file, rnn)
+load_pretrain_embedding(words, word_dict, embedding_file, args.emb_dim)
 print (rnn.word_emb.weight.data)
 
 #n_hidden = 128
@@ -104,7 +104,7 @@ def get_accuracy(guess_label, labels):
     return rate
 
 start = time.time()
-word_dict = build_word_dict(restrict_vocab=True,
+word_dict = buil_word_dict_simple(restrict_vocab=True,
                             embedding_file='../datas/glove.6B.50d.txt',
                             examples=train_data['question'])
 char_dict = build_char_dict()
@@ -150,13 +150,13 @@ for i in range(0, int(length / args.batch_size)):
     #print (start, end)
     if end > length - 1:
         end = length - 1
-    test_data = train_data[start: end]
+    test_data = train_data[start: end-1]
     tq, tl, test_label_tensor, test_qw_tensor, test_qc_tensor = get_batch_datas(test_data,
                                                                                 word_dict,
                                                                                 char_dict)
 
     #print (test_qw_tensor)
     predict = rnn(test_qw_tensor, test_qc_tensor)
-    #print (predict)
+    print (predict)
 
 torch.save(rnn, 'char-typernn-classification.pt')

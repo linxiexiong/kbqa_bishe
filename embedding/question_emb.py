@@ -50,6 +50,8 @@ class QuestionEmb(nn.Module):
         char_out = torch.cat(list(char_hidden), dim=1)
         char_w_emb = char_out.view(c_batch_size, c_seq, -1)
         char_word_emb = torch.cat([word_emb, char_w_emb], dim=2)
+        print (char_word_emb.size())
+        print (entities.size())
         #_, q_hidden = self.q_init_rnn(char_word_emb)
         #q_init_emb = torch.cat(list(q_hidden), dim=1)
         # size = batch_size * (word_dim + char_dim)
@@ -75,10 +77,10 @@ class EntityEmb(nn.Module):
                               args.entity_hidden,
                               num_layers=args.num_layers,
                               batch_first=True, bidirectional=True)
-        self.word_rnn_init_h = nn.Parameter(torch.randn(2 * args.num_layers,
-                                                        args.batch_size,
-                                                        args.entity_hidden).type(torch.FloatTensor),
-                                            )
+        # self.word_rnn_init_h = nn.Parameter(torch.randn(2 * args.num_layers,
+        #                                                 args.batch_size,
+        #                                                 args.entity_hidden).type(torch.FloatTensor),
+        #                                     )
 
     def forward(self, words, chars, ent_emb):
         word_emb = self.word_emb(words)
@@ -90,7 +92,7 @@ class EntityEmb(nn.Module):
         char_w_emb = char_out.view(c_batch_size, c_seq, -1)
         char_word_emb = torch.cat([word_emb, char_w_emb], dim=2)
         print (char_word_emb.size())
-        _, ent_hidden = self.ent_rnn(char_word_emb, self.word_rnn_init_h)
+        _, ent_hidden = self.ent_rnn(char_word_emb)
         out = torch.cat(list(ent_hidden), dim=1)
         print (out.size())
         print (ent_emb.size())
