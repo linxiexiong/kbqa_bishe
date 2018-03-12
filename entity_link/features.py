@@ -259,11 +259,11 @@ def feature_select(sq_datas):
     sq_datas[vec_cols] = sq_datas[vec_cols].astype(float)
     sq_datas = sq_datas.fillna(value=0)
 
-    sq_datas['type'] = sq_datas.apply(lambda x: mid_type(db_conn, x['topic_words']), axis=1)
-    dummy = pd.get_dummies(sq_datas['type'], prefix='type')
-    sq_datas = pd.concat([sq_datas, dummy], axis=1)
-    for col in dummy.columns:
-        feature_columns.append(col)
+    #sq_datas['type'] = sq_datas.apply(lambda x: mid_type(db_conn, x['topic_words']), axis=1)
+    #dummy = pd.get_dummies(sq_datas['type'], prefix='type')
+    #sq_datas = pd.concat([sq_datas, dummy], axis=1)
+    #for col in dummy.columns:
+    #    feature_columns.append(col)
     print (sq_datas[0: 50])
     #sq_datas = sq_datas.sample(frac=0.6)
     return sq_datas[feature_columns], sq_datas['label']

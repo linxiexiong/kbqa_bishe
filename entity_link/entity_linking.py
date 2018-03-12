@@ -27,24 +27,24 @@ def entity_linking():
     #sq_data_test_with_ns = whole_sample(sq_data_test)
     #sq_data_test_with_ns.to_csv('../datas/sq_data_whole_test.csv')
     #test_features, test_label = feature_select(sq_data_test_with_ns)
-    train_features_file = '../datas/features/small_train_100_features.csv'
-    train_label_file = '../datas/features/small_train_labels.csv'
-    test_features_file = '../datas/features/small_test_100_features.csv'
-    test_label_file = '../datas/features/small_test_labels.csv'
+    train_features_file = '../datas/features/all_train_features.csv'
+    train_label_file = '../datas/features/all_train_labels.csv'
+    test_features_file = '../datas/features/all_test_features.csv'
+    test_label_file = '../datas/features/all_test_labels.csv'
     train_features = pd.read_csv(train_features_file)
     train_label = pd.read_csv(train_label_file, header=None)
     print (len(train_features), len(train_label))
     test_features = pd.read_csv(test_features_file)
     test_label = pd.read_csv(test_label_file)
-    sq_data_test_with_ns = pd.read_csv('../datas/test_100.csv')
-    sq_data_train_with_ns = pd.read_csv('../datas/train_100.csv')
+    sq_data_test_with_ns = pd.read_csv('../datas/SimpleQuestions_v2/all_test_whole.csv')
+    sq_data_train_with_ns = pd.read_csv('../datas/SimpleQuestions_v2/all_train_whole.csv')
     train_features, test_features = fix_columns(train_features, test_features)
     #train_features, test_features = fix_columns(train_features, test_features)
     print (len(train_features), len(test_features))
     #sq_data_test = data_load("test")
-    xgb = XGBoostModel(max_depth=3,
-                       learning_rate=0.05,
-                       n_estimators=200).xgb_classifier()
+    xgb = XGBoostModel(max_depth=4,
+                       learning_rate=0.02,
+                       n_estimators=500).xgb_ranker()
     clf = xgb.fit(train_features, train_label)
     predict = clf.predict_proba(test_features)
     predict_train = clf.predict_proba(train_features)
