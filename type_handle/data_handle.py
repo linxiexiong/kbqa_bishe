@@ -7,6 +7,10 @@ import unicodedata
 import string
 import pandas as pd
 import torch
+# if torch.cuda.is_available():
+#     import torch.cuda as torch
+# else:
+import torch as torch
 from torch.autograd import Variable
 import random
 import numpy as np
@@ -45,6 +49,7 @@ def line_to_word_tensor(line, word_dict):
     #max_len = max([len(line.split(' ')) for line in lines ])
     if line is None:
         return Variable(torch.LongTensor(1, 1).zero_())
+    line = line.lower()
     max_len = len(word_tokenize(line))
     #print (max_len)
     #tensor = torch.zeros(len(lines), max_len)
@@ -63,6 +68,7 @@ def line_to_char_tensor(line, char_dict):
     #max_line_len = max([len(line.split(' ')) for line in lines ])
     if line is None:
         return Variable(torch.LongTensor(1, 1, 1).zero_())
+    line = line.lower()
     max_line_len = len(word_tokenize(line))
     max_word_len = 0
 
@@ -100,6 +106,7 @@ def lines_to_word_tensor(lines, word_dict):
         #line = line.decode('utf8')
         if line is None:
             continue
+        line = line.lower()
         line = word_tokenize(line)
         #print(line)
         for i, word in enumerate(line):
@@ -125,6 +132,7 @@ def lines_to_char_tensor(lines, char_dict):
         #line = line.decode('utf8')
         if line is None:
             continue
+        line = line.lower()
         for word in word_tokenize(line):
             if len(word) > max_word_len:
                 max_word_len = len(word)
@@ -133,6 +141,7 @@ def lines_to_char_tensor(lines, char_dict):
         #line = line.decode('utf8')
         if line is None:
             continue
+        line = line.lower()
         line = word_tokenize(line)
         for wi, word in enumerate(line):
             for ci, c in enumerate(word):

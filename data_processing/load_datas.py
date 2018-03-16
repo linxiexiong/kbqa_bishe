@@ -148,7 +148,7 @@ class DataReader(object):
                     pos = idx + inc
                     idxs.append(pos)
                 return idxs
-        print (question + "," + sub_name + ", " + obj_name)
+        #print (question + "," + sub_name + ", " + obj_name)
         print ('=========================')
         return idxs
 
@@ -334,6 +334,10 @@ class DataReader(object):
                     if len(score_list) == 0:
                         word_list.append(label)
                         score_list.append(2.0)
+                        word_name_list.append(label_name)
+                    if label not in word_list:
+                        word_list.append(label)
+                        score_list.append(1.5)
                         word_name_list.append(label_name)
                     data["word_list"].append(word_list)
                     data["word_name_list"].append(word_name_list)

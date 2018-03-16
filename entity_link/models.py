@@ -26,3 +26,7 @@ class XGBoostModel(object):
                              learning_rate=self.learning_rate,
                              n_estimators=self.n_estimators,
                              objective='rank:pairwise')
+
+class NumeralModel(object):
+    def __init__(self, learning_rate=0.1):
+        self.learning_rate = learning_rate

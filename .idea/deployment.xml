@@ -2,6 +2,13 @@
 <project version="4">
   <component name="PublishConfigData" serverName="sftp" createEmptyFolders="true">
     <serverData>
+      <paths name="84">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/kbqa_bishe" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="sftp">
         <serverdata>
           <mappings>

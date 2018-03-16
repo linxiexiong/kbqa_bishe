@@ -50,8 +50,8 @@ class QuestionEmb(nn.Module):
         char_out = torch.cat(list(char_hidden), dim=1)
         char_w_emb = char_out.view(c_batch_size, c_seq, -1)
         char_word_emb = torch.cat([word_emb, char_w_emb], dim=2)
-        print (char_word_emb.size())
-        print (entities.size())
+        #print (char_word_emb.size())
+        #print (entities.size())
         #_, q_hidden = self.q_init_rnn(char_word_emb)
         #q_init_emb = torch.cat(list(q_hidden), dim=1)
         # size = batch_size * (word_dim + char_dim)
@@ -83,6 +83,7 @@ class EntityEmb(nn.Module):
         #                                     )
 
     def forward(self, words, chars, ent_emb):
+        #print (type(words.data), type(chars.data), type(ent_emb.data))
         word_emb = self.word_emb(words)
         c_batch_size, c_seq, c_word_size = chars.size()
         char_emb = self.char_emb(chars.view(-1, c_word_size))
@@ -91,11 +92,11 @@ class EntityEmb(nn.Module):
         char_out = torch.cat(list(char_hidden), dim=1)
         char_w_emb = char_out.view(c_batch_size, c_seq, -1)
         char_word_emb = torch.cat([word_emb, char_w_emb], dim=2)
-        print (char_word_emb.size())
+        #print (char_word_emb.size())
         _, ent_hidden = self.ent_rnn(char_word_emb)
         out = torch.cat(list(ent_hidden), dim=1)
-        print (out.size())
-        print (ent_emb.size())
+        #print (out.size())
+        #print (ent_emb.size())
         entity_emb = torch.cat([out, ent_emb], dim=1)
         return entity_emb
 
@@ -107,11 +108,15 @@ class RelationEmb(nn.Module):
         self.rel_rnn = nn.GRU(args.embedding_dim,
                               args.relation_hidden,
                               num_layers=args.num_layers,
-                              bidirectional=True)
+                              bidirectional=True, batch_first=True)
 
     def forward(self, words, rel_emb):
+        print ("rel emb size ===========")
+        print (rel_emb.size())
         word_emb = self.word_emb(words)
         _, rel_hidden = self.rel_rnn(word_emb)
         out = torch.cat(list(rel_hidden), dim=1)
+        print ("out size ============")
+        print (out.size())
         relation_emb = torch.cat([out, rel_emb], dim=1)
         return relation_emb

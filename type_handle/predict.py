@@ -3,12 +3,13 @@ from data_handle import *
 import sys
 
 
-rnn = torch.load('char-typernn-classification.pt')
-
+param = torch.load('char-typernn-classification.pt')
+print (param)
+rnn = param['network']
 print (rnn.word_emb.weight.data)
 print (rnn.char_emb.weight.data)
 rnn.training = False
-print (rnn)
+#print (rnn)
 
 
 def predict(category_tensor, qw_tensor, qc_tensor):

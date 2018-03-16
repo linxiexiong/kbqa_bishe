@@ -9,6 +9,13 @@
           </advancedOptions>
         </fileTransfer>
       </webServer>
+      <webServer id="03da66b4-15f9-4b98-95c6-2d8980a99efe" name="84" url="http://10.60.1.84">
+        <fileTransfer host="10.60.1.84" port="22" rootFolder="/home/jinxiaolong/linxx" accessType="SFTP" password="dfc3dfc9dfdedfeadfc9dfc6dfc0" username="jinxiaolong">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

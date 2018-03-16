@@ -27,17 +27,20 @@ def entity_linking():
     #sq_data_test_with_ns = whole_sample(sq_data_test)
     #sq_data_test_with_ns.to_csv('../datas/sq_data_whole_test.csv')
     #test_features, test_label = feature_select(sq_data_test_with_ns)
-    train_features_file = '../datas/features/all_train_features.csv'
-    train_label_file = '../datas/features/all_train_labels.csv'
-    test_features_file = '../datas/features/all_test_features.csv'
-    test_label_file = '../datas/features/all_test_labels.csv'
+    train_features_file = '../datas/features/small_train_100_features.csv'
+    train_label_file = '../datas/features/small_train_labels.csv'
+    test_features_file = '../datas/features/small_test_100_features.csv'
+    test_label_file = '../datas/features/small_test_labels.csv'
     train_features = pd.read_csv(train_features_file)
     train_label = pd.read_csv(train_label_file, header=None)
     print (len(train_features), len(train_label))
     test_features = pd.read_csv(test_features_file)
     test_label = pd.read_csv(test_label_file)
-    sq_data_test_with_ns = pd.read_csv('../datas/SimpleQuestions_v2/all_test_whole.csv')
-    sq_data_train_with_ns = pd.read_csv('../datas/SimpleQuestions_v2/all_train_whole.csv')
+    #sq_data_test_with_ns = pd.read_csv('../datas/SimpleQuestions_v2/all_test_whole.csv')
+    #sq_data_train_with_ns = pd.read_csv('../datas/SimpleQuestions_v2/all_train_whole.csv')
+    sq_data_test_with_ns = pd.read_csv('../datas/test_100.csv')
+    sq_data_train_with_ns = pd.read_csv('../datas/train_100.csv')
+
     train_features, test_features = fix_columns(train_features, test_features)
     #train_features, test_features = fix_columns(train_features, test_features)
     print (len(train_features), len(test_features))
@@ -72,7 +75,7 @@ def entity_linking():
 
 def evaluate(df, n, stage):
     df = df.sort_values(['predict'], ascending=False).groupby('qid').head(n)
-    df.to_csv(stage + '_head_' + str(n) + ".csv", index=False)
+    df.to_csv(stage + '_head_100_' + str(n) + ".csv", index=False)
     df['is_equal'] = df.apply(lambda x: 1 if x['golden_word'] == x['topic_words'] else 0, axis=1)
     dff = df.groupby(['qid'], as_index=False).agg({'is_equal': sum})
     dff[dff.is_equal == 0].to_csv('error_sample.csv')

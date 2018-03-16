@@ -1,3 +1,6 @@
+# if torch.cuda.is_available():
+#     import torch.cuda as torch
+# else:
 import torch
 import torch.nn as nn
 import torch.nn.functional as F

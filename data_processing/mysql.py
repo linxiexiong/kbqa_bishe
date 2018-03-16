@@ -42,3 +42,15 @@ def get_mid_to_name_mysql(db_conn, mid):
         if name is not None and len(name) >= 1:
             return name[0]
         return None
+
+
+def get_relation_vector(conn, rel):
+    table_name = 'relation2vec_2'
+    query = "select vector from %s where mid = '%s' " % (table_name, rel)
+    vector = conn.search(query)
+    # print (vector)
+    if vector is not None and len(vector) >= 1:
+        return vector[0]
+    #print (mid)
+    vec = ','.join(['0' for _ in range(50)])
+    return vec

@@ -13,10 +13,10 @@ import argparse
 from embedding.vocab import *
 
 
-n_letters, categories, n_categories = get_len('type_test.csv')
+n_letters, categories, n_categories = get_len('type_train.csv')
 print (n_letters, categories, n_categories)
 
-train_data = data_handle('type_test.csv')
+train_data = data_handle('type_train.csv')
 word_dict = buil_word_dict_simple(restrict_vocab=True,
                                 embedding_file='../datas/glove.6B.50d.txt',
                                 examples=train_data['question'])
@@ -143,20 +143,25 @@ for epoch in range(1, n_epochs + 1):
         #     all_losses.append(current_loss / plot_every)
         #     current_loss = 0
 rnn.eval()
-length = len(train_data)
+test_data = data_handle('type_test.csv')
+length = len(test_data)
 for i in range(0, int(length / args.batch_size)):
     start = i * args.batch_size
     end = (i + 1) * args.batch_size
     #print (start, end)
     if end > length - 1:
         end = length - 1
-    test_data = train_data[start: end-1]
-    tq, tl, test_label_tensor, test_qw_tensor, test_qc_tensor = get_batch_datas(test_data,
+    test_data_batch = test_data[start: end]
+    tq, tl, test_label_tensor, test_qw_tensor, test_qc_tensor = get_batch_datas(test_data_batch,
                                                                                 word_dict,
                                                                                 char_dict)
-
+    #print (test_qw_tensor, test_qc_tensor)
     #print (test_qw_tensor)
     predict = rnn(test_qw_tensor, test_qc_tensor)
     print (predict)
-
-torch.save(rnn, 'char-typernn-classification.pt')
+param = {
+    'network': rnn,
+    'word_dict': word_dict,
+    'char_dict': char_dict
+}
+torch.save(param, 'char-typernn-classification.pt')

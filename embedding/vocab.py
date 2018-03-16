@@ -1,6 +1,9 @@
 from .basic import Dictionary
 import codecs
 from nltk.tokenize import word_tokenize
+# if torch.cuda.is_available():
+#     import torch.cuda as torch
+# else:
 import torch
 
 
@@ -72,7 +75,7 @@ def load_embeddings(words, word_dict, embedding_file, network):
             #w = word_dict.normalize(parsed[0])
             w = parsed[0]
             if w in words:
-                vec = torch.Tensor([float(i) for i in parsed[1:]])
+                vec = torch.Tensor([float(i) for i in parsed[1:]]).cuda()
                 if w not in vec_counts:
                     vec_counts[w] = 1
                     embedding[word_dict[w]].copy_(vec)
@@ -97,4 +100,4 @@ def load_pretrain_embedding(words, word_dict, embedding_file, dim):
             if w in words:
                 vec = torch.Tensor([float(i) for i in parsed[1:]])
                 embedding[word_dict[w]] = vec
-    return torch.Tensor(embedding)
+    return torch.Tensor(embedding).cuda()

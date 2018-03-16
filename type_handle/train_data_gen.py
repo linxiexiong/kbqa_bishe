@@ -1,9 +1,11 @@
 from __future__ import unicode_literals, print_function, division
-from entity_link.features import data_load, mid_type
-from data_processing.mysql import MySQL
 import sys
 sys.path.append('..')
 sys.path.append('../..')
+from entity_link.features import data_load, mid_type
+from data_processing.mysql import MySQL
+import pandas as pd
+
 
 
 def get_mid_to_name_mysql(db_conn, mid):
@@ -16,10 +18,17 @@ def get_mid_to_name_mysql(db_conn, mid):
         return None
 
 
+def load_type_data(file_name):
+    sq_data_train  = pd.read_csv(file_name)
+    return sq_data_train
+
+
 def gen_type_train_data():
-    sq_data_train = data_load('train')
+    #sq_data_train = data_load('train')
     #sq_data_valid = data_load('valid')
-    sq_data_test = data_load('test')
+    #sq_data_test = data_load('test')
+    sq_data_train = pd.read_csv('../datas/train_1w.csv')
+    sq_data_test = pd.read_csv('../datas/test_1w.csv')
 
     sq_data_train = get_type(sq_data_train)
     #sq_data_valid = get_type(sq_data_valid)
