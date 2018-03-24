@@ -54,3 +54,25 @@ def get_relation_vector(conn, rel):
     #print (mid)
     vec = ','.join(['0' for _ in range(50)])
     return vec
+
+
+def get_entity_vector(conn, mid):
+    table_name = 'entity2vec_2'
+    query = "select vector from %s where mid = '%s' " % (table_name, mid)
+    vector = conn.search(query)
+    # print (vector)
+    if vector is not None and len(vector) >= 1:
+        return vector[0]
+    print (mid)
+    vec = ','.join(['0' for _ in range(50)])
+    return vec
+
+
+def get_mid_type(conn, mid):
+    table_name = 'mid2type'
+    query = "select notable_type from %s where mid = '%s' " % (table_name, mid)
+    vector = conn.search(query)
+    # print (vector)
+    if vector is not None and len(vector) >= 1:
+        return vector[0]
+    return None

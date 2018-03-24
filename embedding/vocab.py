@@ -5,7 +5,7 @@ from nltk.tokenize import word_tokenize
 #     import torch.cuda as torch
 # else:
 import torch
-
+from data_processing.mysql import MySQL, get_entity_vector, get_relation_vector
 
 def build_char_dict():
     char_dict = dict()
@@ -91,7 +91,7 @@ def load_pretrain_embedding(words, word_dict, embedding_file, dim):
     words = {w for w in words if w in word_dict}
 
     #print (len(words))
-    embedding = torch.rand(len(word_dict), dim)
+    embedding = torch.randn(len(word_dict), dim)
     #print (words)
     with open(embedding_file) as f:
         for line in f:
@@ -100,4 +100,48 @@ def load_pretrain_embedding(words, word_dict, embedding_file, dim):
             if w in words:
                 vec = torch.Tensor([float(i) for i in parsed[1:]])
                 embedding[word_dict[w]] = vec
+    return torch.Tensor(embedding).cuda()
+
+
+def build_entity_dict(entities):
+    ent_dict = {}
+    index = 0
+    for ent in entities:
+        if ent not in ent_dict:
+            ent_dict[ent] = index
+            index += 1
+    return ent_dict
+
+
+def load_entity_embedding(entity_dict, dim):
+    db_conn = MySQL(ip='10.61.2.166', port=3306, user='zengyutao',
+                                       pw='zengyutao', db_name='wikidata')
+    embedding = torch.randn(len(entity_dict), dim)
+
+    for e in entity_dict:
+        vec = get_entity_vector(db_conn, e)
+        vec_s = [float(x) for x in str(vec).split(',')]
+        embedding[entity_dict[e]] = torch.Tensor(vec_s)
+    return torch.Tensor(embedding).cuda()
+
+
+def build_relation_dict(relations):
+    ent_dict = {}
+    index = 0
+    for ent in relations:
+        if ent not in ent_dict:
+            ent_dict[ent] = index
+            index += 1
+    return ent_dict
+
+
+def load_relation_embedding(relation_dict, dim):
+    db_conn = MySQL(ip='10.61.2.166', port=3306, user='zengyutao',
+                                       pw='zengyutao', db_name='wikidata')
+    embedding = torch.randn(len(relation_dict), dim)
+
+    for e in relation_dict:
+        vec = get_relation_vector(db_conn, e)
+        vec_s = [float(x) for x in str(vec).split(',')]
+        embedding[relation_dict[e]] = torch.Tensor(vec_s)
     return torch.Tensor(embedding).cuda()

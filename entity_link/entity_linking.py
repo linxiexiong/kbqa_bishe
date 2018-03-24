@@ -3,6 +3,7 @@ from features import data_load, feature_select, negative_sampling, whole_sample
 import pandas as pd
 from sklearn.metrics import log_loss
 import numpy as np
+import pickle
 
 
 def entity_linking():
@@ -46,12 +47,16 @@ def entity_linking():
     print (len(train_features), len(test_features))
     #sq_data_test = data_load("test")
     xgb = XGBoostModel(max_depth=4,
-                       learning_rate=0.02,
-                       n_estimators=500).xgb_ranker()
+                        learning_rate=0.02,
+                        n_estimators=500).xgb_classifier()
     clf = xgb.fit(train_features, train_label)
+    #clf = pickle.load(open("../datas/models/xgb_100.pickle.dat", "rb"))
     predict = clf.predict_proba(test_features)
     predict_train = clf.predict_proba(train_features)
-    #print predict
+    pickle.dump(clf, open("../datas/models/xgb_100.pickle.dat", "wb"))
+    #xgb.save_model('../datas/models/xgb.model')
+    print (predict)
+    print (predict_train)
     print (len(sq_data_test_with_ns))
     sq_data_test_with_ns['predict'] = predict[:, 1]
     sq_data_train_with_ns['predict'] = predict_train[:, 1]
@@ -70,6 +75,7 @@ def entity_linking():
     hitt5 = evaluate(sq_data_train_with_ns, 5, 'train')
     hitt10 = evaluate(sq_data_train_with_ns, 10, 'train')
     print (hit1, hit5, hit10, hitt1, hitt5, hitt10)
+
     #print log_loss(sq_data_valid_with_ns['label'], predict)
 
 

@@ -149,10 +149,16 @@ class SimpleRNN(nn.Module):
         #self.word_emb = nn.Embedding(args.vocab_size, args.emb_dim)
 
         #self.word_emb.weight = nn.Parameter(args.word_embedding)
-        self.sentence_rnn = nn.GRU(args.embedding_dim + args.char_dim + args.entity_dim,
+        if args.method == 'word':
+            self.sentence_rnn = nn.GRU(args.embedding_dim + args.char_hidden*args.num_layers*2,
                                    args.hidden_size,
                                    num_layers=args.num_layers,
                                    batch_first=True, bidirectional=True)
+        else:
+            self.sentence_rnn = nn.GRU(args.embedding_dim + args.char_hidden*args.num_layers*2 + args.entity_dim,
+                                       args.hidden_size,
+                                       num_layers=args.num_layers,
+                                       batch_first=True, bidirectional=True)
         # self.word_rnn_init_h = nn.Parameter(torch.randn(2 * args.num_layers,
         #                                                 args.batch_size,
         #                                                 args.hidden_size).type(torch.FloatTensor),
