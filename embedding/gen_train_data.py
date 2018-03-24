@@ -216,7 +216,7 @@ def gen_train_data(train_data, word_dict, char_dict, args):
             negative_ents.append("none")
             negative_vecs.append(np.random.rand(args.entity_dim))
             neg_ent_idxs.append(0)
-            neg_type.append("none")
+            negative_types.append("none")
         else:
             m = random.randint(0, len(neg_ents) - 1)
             negative_ents.append(neg_ents[m])
@@ -264,13 +264,14 @@ def gen_train_data(train_data, word_dict, char_dict, args):
             neg_rel_vecs.append(neg_rel_vec[m])
             neg_rel_idxs.append(neg_rel_idx[m])
 
-    qw_tensor = lines_to_word_tensor(questions, word_dict)
-    qc_tensor = lines_to_char_tensor(questions, char_dict)
+
     max_len = 0
     for line in questions:
         if len(word_tokenize(line)) > max_len:
             max_len = len(word_tokenize(line))
     entity_tensor = torch.rand(args.batch_size, max_len, args.entity_dim)
+    qw_tensor = lines_to_word_tensor(questions, word_dict, max_len)
+    qc_tensor = lines_to_char_tensor(questions, char_dict, max_len)
 
     pos_vec = torch.LongTensor(args.batch_size, max_len).fill_(1)
     #cand_idx_tensor = torch.Tensor(cand_idices)
@@ -298,28 +299,40 @@ def gen_train_data(train_data, word_dict, char_dict, args):
             pos_vec[i][pos[j]] = 2
             #entity_idx[i][pos[j]] = torch.Tensor(cand_idices)
 
+    #positive_word_tensor = lines_to_word_tensor(positive_ents + positive_types, word_dict)
+    #positive_entw_tensor = positive_word_tensor[: args.batch_size]
+    ##positive_typew_tensor = positive_word_tensor[args.batch_size:]
+    max_word_len = max([len(w) for w in (positive_ents + positive_types) if w is not None])
 
-    positive_entw_tensor = lines_to_word_tensor(positive_ents, word_dict)
-    positive_entc_tensor = lines_to_char_tensor(positive_ents, char_dict)
-    positive_typew_tensor = lines_to_word_tensor(positive_types, word_dict)
+    positive_entw_tensor = lines_to_word_tensor(positive_ents, word_dict, max_word_len)
+    positive_entc_tensor = lines_to_char_tensor(positive_ents, char_dict, max_word_len)
+    positive_typew_tensor = lines_to_word_tensor(positive_types, word_dict, max_word_len)
+    # print (positive_typew_tensor)
+    # positive_typew_tensor = positive_typew_tensor.resize_(positive_typew_tensor.size(0),
+    #                                                       positive_entw_tensor.size(1))
+    # print (positive_typew_tensor)
 
     positive_enti_tensor = torch.from_numpy(np.array(pos_ent_idxs))
 
     #positive_ente_tensor = torch.Tensor(positive_vecs)
-
-    negative_entw_tensor = lines_to_word_tensor(negative_ents, word_dict)
-    negative_entc_tensor = lines_to_char_tensor(negative_ents, char_dict)
-    negative_typew_tensor = lines_to_word_tensor(negative_types, word_dict)
+    neg_word_len = max([len(nw) for nw in (negative_ents + negative_types) if nw is not None])
+    negative_entw_tensor = lines_to_word_tensor(negative_ents, word_dict, neg_word_len)
+    negative_entc_tensor = lines_to_char_tensor(negative_ents, char_dict, neg_word_len)
+    negative_typew_tensor = lines_to_word_tensor(negative_types, word_dict, neg_word_len)
+    # negative_typew_tensor = negative_typew_tensor.resize_(negative_typew_tensor.size(0),
+    #                                                      negative_entw_tensor.size(1))
     negative_enti_tensor = torch.from_numpy(np.array(neg_ent_idxs))
     #negative_ente_tensor = torch.Tensor(negative_vecs)
 
     #print ("============rel tensor sizes ===========")
-    positive_relw_tensor = lines_to_word_tensor(positive_rels, word_dict)
+    pos_rel_word_len = max([len(pr) for pr in positive_rels if pr is not None])
+    positive_relw_tensor = lines_to_word_tensor(positive_rels, word_dict, pos_rel_word_len)
     positive_reli_tensor = torch.from_numpy(np.array(pos_rel_idxs))
     #print (positive_relw_tensor.data.size())
     #positive_rele_tensor = torch.Tensor(pos_rel_vecs)
 
-    negative_relw_tensor = lines_to_word_tensor(negative_rels, word_dict)
+    neg_rel_word_len = max([len(nr) for nr in negative_rels if nr is not None])
+    negative_relw_tensor = lines_to_word_tensor(negative_rels, word_dict, neg_rel_word_len)
     negative_reli_tensor = torch.from_numpy(np.array(neg_rel_idxs))
     #print (negative_relw_tensor.data.size())
     #negative_rele_tensor = torch.Tensor(neg_rel_vecs)
@@ -339,19 +352,19 @@ def gen_train_data(train_data, word_dict, char_dict, args):
                 negative_rele_tensor[i][yn] = torch.Tensor(neg_rel_vecs[i])
 
     data_tensor = dict()
-    data_tensor['qw'] = qw_tensor
-    data_tensor['qc'] = qc_tensor
+    data_tensor['qw'] = Variable(qw_tensor)
+    data_tensor['qc'] = Variable(qc_tensor)
     data_tensor['entity'] = Variable(entity_tensor.cuda(), requires_grad=False)
     data_tensor['position'] = Variable(pos_vec.cuda(), requires_grad=False)
-    data_tensor['positive_entw'] = positive_entw_tensor
-    data_tensor['positive_entc'] = positive_entc_tensor
+    data_tensor['positive_entw'] = Variable(positive_entw_tensor)
+    data_tensor['positive_entc'] = Variable(positive_entc_tensor)
     data_tensor['positive_ente'] = Variable(positive_ente_tensor.cuda(), requires_grad=False)
-    data_tensor['negative_entw'] = negative_entw_tensor
-    data_tensor['negative_entc'] = negative_entc_tensor
+    data_tensor['negative_entw'] = Variable(negative_entw_tensor)
+    data_tensor['negative_entc'] = Variable(negative_entc_tensor)
     data_tensor['negative_ente'] = Variable(negative_ente_tensor.cuda(), requires_grad=False)
-    data_tensor['positive_relw'] = positive_relw_tensor
+    data_tensor['positive_relw'] = Variable(positive_relw_tensor)
     data_tensor['positive_rele'] = Variable(positive_rele_tensor.cuda(), requires_grad=False)
-    data_tensor['negative_relw'] = negative_relw_tensor
+    data_tensor['negative_relw'] = Variable(negative_relw_tensor)
     data_tensor['negative_rele'] = Variable(negative_rele_tensor.cuda(), requires_grad=False)
 
     data_tensor['positive_enti'] = Variable(positive_enti_tensor.cuda())
@@ -360,8 +373,8 @@ def gen_train_data(train_data, word_dict, char_dict, args):
     data_tensor['negative_reli'] = Variable(negative_reli_tensor.cuda())
     data_tensor['cand_ent'] = Variable(cand_idx_tensor.cuda())
     data_tensor['predict'] = Variable(predicts_tensor.cuda())
-    data_tensor['positive_type'] = positive_typew_tensor
-    data_tensor['negative_type'] = negative_typew_tensor
+    data_tensor['positive_type'] = Variable(positive_typew_tensor)
+    data_tensor['negative_type'] = Variable(negative_typew_tensor)
 
 
     return data_tensor
@@ -439,12 +452,13 @@ def gen_batch_test_data(data, word_dict, char_dict, args):
         entities_vecs.append(row['entities_vec'].loc[n])
         poses.append(row['pos'].loc[n])
 
-    qw_tensor = lines_to_word_tensor(questions, word_dict)
-    qc_tensor = lines_to_char_tensor(questions, char_dict)
+
     max_len = 0
     for line in questions:
         if len(word_tokenize(line)) > max_len:
             max_len = len(word_tokenize(line))
+    qw_tensor = lines_to_word_tensor(questions, word_dict, max_len)
+    qc_tensor = lines_to_char_tensor(questions, char_dict, max_len)
     entity_tensor = torch.rand(args.batch_size, max_len, args.entity_dim)
     #print entity_tensor.size()
     #print type(entity_tensor)
@@ -455,6 +469,8 @@ def gen_batch_test_data(data, word_dict, char_dict, args):
         print (pos)
         for j in range(len(pos)):
             entity_tensor[i][pos[j]] =torch.from_numpy(entities_vec)
+
+    #max_word_len = max(len(w) for w in (positive_ents + positive_))
     positive_entw_tensor = lines_to_word_tensor(positive_ents, word_dict)
     positive_entc_tensor = lines_to_char_tensor(positive_ents, char_dict)
     positive_ente_tensor = torch.Tensor(positive_vecs)
@@ -484,8 +500,9 @@ def gen_simgle_test_data(data, word_dict, char_dict, i, entity_dim, entity_dict)
     test_tensor = {}
 
     question = data.loc[data['qid'] == i, 'question'].iloc[0]
-    qw_tensor = line_to_word_tensor(question, word_dict)
-    qc_tensor = line_to_char_tensor(question, char_dict)
+    max_len = len(word_tokenize(question))
+    qw_tensor = Variable(line_to_word_tensor(question, word_dict, max_len))
+    qc_tensor = Variable(line_to_char_tensor(question, char_dict, max_len))
     test_tensor['qw_tensor'] = qw_tensor
     test_tensor['qc_tensor'] = qc_tensor
 
@@ -546,18 +563,27 @@ def gen_simgle_test_data(data, word_dict, char_dict, i, entity_dim, entity_dict)
             len(cand_names) == len(cand_indice)), "len cands should be equal"
     for idx, line in enumerate(cand_names):
         print (line)
-        l_tw = line_to_word_tensor(line, word_dict)
-        print (l_tw.size())
-        l_tc = line_to_char_tensor(line, char_dict)
-        cand_tw.append(l_tw)
-        cand_tc.append(l_tc)
+        if line is None and cant_types[idx] is None:
+            max_line_len = 0
+        elif line is None and cant_types[idx] is not None:
+            max_line_len = len(word_tokenize(cant_types[idx]))
+        elif line is not None and cant_types[idx] is None:
+            max_line_len = len(word_tokenize(line))
+        else:
+            max_line_len = max(len(word_tokenize(line)), len(word_tokenize(cant_types[idx])))
+        l_tw = line_to_word_tensor(line, word_dict, max_line_len)
 
-        l_tt = line_to_word_tensor(cant_types[idx], word_dict)
-        cand_tt.append(l_tt)
+        l_tc = line_to_char_tensor(line, char_dict, max_line_len)
+        print (l_tc.size())
+        cand_tw.append(Variable(l_tw))
+        cand_tc.append(Variable(l_tc))
+
+        l_tt = line_to_word_tensor(cant_types[idx], word_dict, max_line_len)
+        cand_tt.append(Variable(l_tt))
         cand_ti.append(Variable(torch.LongTensor([cand_indice[idx]]).cuda()))
 
-        c_tensor = torch.rand(1, l_tw.size(1), entity_dim)
-        for x in range(l_tw.size(1)):
+        c_tensor = torch.rand(1, max_line_len, entity_dim)
+        for x in range(max_line_len):
             c_tensor[0][x] = torch.Tensor(cand_vec_dict[cand_mid[idx]])
         cand_tensor.append(Variable(c_tensor.cuda()))
     test_tensor['cande_tensor'] = cand_tensor
@@ -587,8 +613,9 @@ def get_single_relation_tensor(data, max_cand, word_dict, i, triples, relation_d
         cand_ti.append(Variable(torch.LongTensor([relation_dict[rel]]).cuda()))
         rel_re = rel.replace('/', ' ').replace('_', ' ')
         print (word_tokenize(rel_re))
-        r_tw = line_to_word_tensor(rel_re, word_dict)
-        cand_tw.append(r_tw)
+        rel_len = len(word_tokenize(rel_re))
+        r_tw = line_to_word_tensor(rel_re, word_dict, rel_len)
+        cand_tw.append(Variable(r_tw))
         rel_vec = get_relation_vector(db_conn, rel)
         rel_vec = [float(x) for x in str(rel_vec).split(',')]
         #r_te = Variable(torch.Tensor([rel_vec])).cuda()

@@ -65,8 +65,8 @@ class QuestionEmb(nn.Module):
             qe_emb = self.q_end_rnn(char_word_emb)
         elif method == 'ent_idx':
             ents_emb = self.ent_emb(entities)
-            print (predict)
-            print (predict.size())
+            #print (predict)
+            #print (predict.size())
             predict = predict.unsqueeze(2)
             pred = predict.transpose(2, 1)
             entity_emb = pred.bmm(ents_emb)
@@ -90,7 +90,7 @@ class EntityEmb(nn.Module):
         self.entity_emb = nn.Embedding(args.entity_vocab_size, args.entity_dim)
         self.char_rnn = nn.GRU(args.char_dim, args.char_hidden, num_layers=args.num_layers,
                                bidirectional=True, batch_first=True)
-        self.ent_rnn = nn.GRU(args.embedding_dim + args.char_hidden*args.num_layers*2 + args.entity_dim,
+        self.ent_rnn = nn.GRU(args.embedding_dim * 2 + args.char_hidden*args.num_layers*2 + args.entity_dim,
                               args.entity_hidden,
                               num_layers=args.num_layers,
                               batch_first=True, bidirectional=True)
@@ -124,7 +124,14 @@ class EntityEmb(nn.Module):
             ent_emb = ent_emb.unsqueeze(1)
             ent_emb_exp = ent_emb.expand(ent_emb.size(0), char_word_emb.size(1), ent_emb.size(2))
             word_char_ent_emb = torch.cat([char_word_emb, ent_emb_exp], dim=2)
-            _, ent_hidden = self.ent_rnn(word_char_ent_emb)
+            print ("types size ========")
+            print (word_char_ent_emb.size())
+            type_emb = self.word_emb(types)
+            print (type_emb.size())
+            #type_emb_resize = type_emb.resize_(type_emb.size(0), word_char_ent_emb.size(1), type_emb.size(2))
+            #print (type_emb_resize)
+            word_cahr_ent_type_emb = torch.cat([word_char_ent_emb, type_emb], dim=2)
+            _, ent_hidden = self.ent_rnn(word_cahr_ent_type_emb)
             out = torch.cat(list(ent_hidden), dim=1)
         elif method == 'ent_vec':
             word_char_ent_emb = torch.cat([char_word_emb, ent_emb], dim=2)

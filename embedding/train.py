@@ -85,7 +85,7 @@ def train(args, word_dict, train_data, entity_dict, relation_dict):
     margin = 0.5
     mask = Variable(torch.rand(args.batch_size, 10))
     #train_data = prepair_data(train_data, args.triples)
-    train_data = load_prepaired_data('../datas/prepaired_train_data_100.csv')
+    train_data = load_prepaired_data('../datas/prepaired_train_data_1w.csv')
     train_data['negative_type'] = train_data['negative_type'].fillna(value='none')
     train_data['positive_type'] = train_data['positive_type'].fillna(value='none')
     #print (qe_model.state_dict())
@@ -250,7 +250,7 @@ def predict(qe_model, qr_model, word_dict, char_dict, test_data, entity_dict, re
 
 
 if __name__ == "__main__":
-    file_name = '../entity_link/train_head_100_10.csv'
+    file_name = '../entity_link/train_head_10.csv'
     train_data = load_data(file_name)
     train_data = train_data.fillna(value='none')
     #train_data = train_data['topic_words_names'].fillna(value='none')
@@ -270,7 +270,7 @@ if __name__ == "__main__":
     args.epoch = 10000
     args.learning_rate = 0.002
     args.embedding_file = '../datas/glove.6B.50d.txt'
-    args.file_name = '../entity_link/train_head_100_10.csv'
+    args.file_name = '../entity_link/train_head_10.csv'
 
     word_dict = buil_word_dict_simple(True, args.embedding_file,
                                 word_datas)
@@ -321,7 +321,7 @@ if __name__ == "__main__":
     # torch.save(param, 'qa-100-rnn.pt')
     qe_model.eval()
     qr_model.eval()
-    test_data = pd.read_csv('../entity_link/train_head_100_10.csv')
+    test_data = pd.read_csv('../entity_link/test_head_10.csv')
     test_data = test_data.fillna(value='none')
     test_data['question'] = test_data['question'].apply(lambda x: x.lower())
     test_data['topic_words_names'] = test_data['topic_words_names'].apply(lambda x: x.lower())

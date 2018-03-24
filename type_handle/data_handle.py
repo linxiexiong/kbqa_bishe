@@ -44,13 +44,16 @@ def line_to_tensor(line, all_letters):
     return tensor
 
 
-def line_to_word_tensor(line, word_dict):
+def line_to_word_tensor(line, word_dict, max_len):
     #print ([(line.split(' ')) for line in lines])
     #max_len = max([len(line.split(' ')) for line in lines ])
     if line is None:
-        return Variable(torch.LongTensor(1, 1).zero_().cuda())
+        if max_len == 0:
+            return torch.LongTensor(1, 1).zero_().cuda()
+        else:
+            return torch.LongTensor(1, max_len).zero_().cuda()
     line = line.lower()
-    max_len = len(word_tokenize(line))
+    #max_len = len(word_tokenize(line))
     #print (max_len)
     #tensor = torch.zeros(len(lines), max_len)
     tensor = torch.LongTensor(1, max_len).zero_().cuda()
@@ -62,14 +65,17 @@ def line_to_word_tensor(line, word_dict):
             tensor[0][i] = 0
             continue
         tensor[0][i] = word_dict[word]
-    return Variable(tensor.cuda())
+    return tensor.cuda()
 
-def line_to_char_tensor(line, char_dict):
+def line_to_char_tensor(line, char_dict, max_line_len):
     #max_line_len = max([len(line.split(' ')) for line in lines ])
     if line is None:
-        return Variable(torch.LongTensor(1, 1, 1).zero_().cuda())
+        if max_line_len == 0:
+            return torch.LongTensor(1, 1, 1).zero_().cuda()
+        else:
+            return torch.LongTensor(1, max_line_len, 1).zero_().cuda()
     line = line.lower()
-    max_line_len = len(word_tokenize(line))
+    #max_line_len = len(word_tokenize(line))
     max_word_len = 0
 
     for word in word_tokenize(line):
@@ -84,20 +90,20 @@ def line_to_char_tensor(line, char_dict):
                 tensor[0][wi][ci] = 0
                 continue
             tensor[0][wi][ci] = char_dict[c]
-    return Variable(tensor.cuda())
+    return tensor.cuda()
 
 
-def lines_to_word_tensor(lines, word_dict):
+def lines_to_word_tensor(lines, word_dict, max_len):
     #print ([(line.split(' ')) for line in lines])
     #max_len = max([len(line.split(' ')) for line in lines ])
-    max_len = 0
-    for line in lines:
-        #line = line.decode('utf8')
-        #print (line)
-        if line is None:
-            continue
-        if len(word_tokenize(line)) > max_len:
-            max_len = len(word_tokenize(line))
+    # max_len = 0
+    # for line in lines:
+    #     #line = line.decode('utf8')
+    #     #print (line)
+    #     if line is None:
+    #         continue
+    #     if len(word_tokenize(line)) > max_len:
+    #         max_len = len(word_tokenize(line))
     #print (max_len)
     #tensor = torch.zeros(len(lines), max_len)
     tensor = torch.LongTensor(len(lines), max_len).zero_().cuda()
@@ -115,18 +121,18 @@ def lines_to_word_tensor(lines, word_dict):
                 tensor[li][i] = 0
                 continue
             tensor[li][i] = word_dict[word]
-    return Variable(tensor.cuda())
+    return tensor.cuda()
 
 
-def lines_to_char_tensor(lines, char_dict):
+def lines_to_char_tensor(lines, char_dict, max_line_len):
     #max_line_len = max([len(line.split(' ')) for line in lines ])
-    max_line_len = 0
-    for line in lines:
-        #line = line.decode('utf8')
-        if line is None:
-            continue
-        if len(word_tokenize(line)) > max_line_len:
-            max_line_len = len(word_tokenize(line))
+    # max_line_len = 0
+    # for line in lines:
+    #     #line = line.decode('utf8')
+    #     if line is None:
+    #         continue
+    #     if len(word_tokenize(line)) > max_line_len:
+    #         max_line_len = len(word_tokenize(line))
     max_word_len = 0
     for line in lines:
         #line = line.decode('utf8')
@@ -149,7 +155,7 @@ def lines_to_char_tensor(lines, char_dict):
                     tensor[li][wi][ci] = 0
                     continue
                 tensor[li][wi][ci] = char_dict[c]
-    return Variable(tensor.cuda())
+    return tensor.cuda()
 
 
 def type_to_index(types):
