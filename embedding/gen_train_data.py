@@ -302,7 +302,9 @@ def gen_train_data(train_data, word_dict, char_dict, args):
     #positive_word_tensor = lines_to_word_tensor(positive_ents + positive_types, word_dict)
     #positive_entw_tensor = positive_word_tensor[: args.batch_size]
     ##positive_typew_tensor = positive_word_tensor[args.batch_size:]
-    max_word_len = max([len(w) for w in (positive_ents + positive_types) if w is not None])
+    max_word_len = max([len(word_tokenize(w)) for w in (positive_ents + positive_types) if w is not None])
+    if max_word_len > 20:
+        print (positive_ents + positive_types)
 
     positive_entw_tensor = lines_to_word_tensor(positive_ents, word_dict, max_word_len)
     positive_entc_tensor = lines_to_char_tensor(positive_ents, char_dict, max_word_len)
@@ -315,7 +317,9 @@ def gen_train_data(train_data, word_dict, char_dict, args):
     positive_enti_tensor = torch.from_numpy(np.array(pos_ent_idxs))
 
     #positive_ente_tensor = torch.Tensor(positive_vecs)
-    neg_word_len = max([len(nw) for nw in (negative_ents + negative_types) if nw is not None])
+    neg_word_len = max([len(word_tokenize(nw)) for nw in (negative_ents + negative_types) if nw is not None])
+    if neg_word_len > 20:
+        print(negative_ents + negative_types)
     negative_entw_tensor = lines_to_word_tensor(negative_ents, word_dict, neg_word_len)
     negative_entc_tensor = lines_to_char_tensor(negative_ents, char_dict, neg_word_len)
     negative_typew_tensor = lines_to_word_tensor(negative_types, word_dict, neg_word_len)
@@ -325,13 +329,13 @@ def gen_train_data(train_data, word_dict, char_dict, args):
     #negative_ente_tensor = torch.Tensor(negative_vecs)
 
     #print ("============rel tensor sizes ===========")
-    pos_rel_word_len = max([len(pr) for pr in positive_rels if pr is not None])
+    pos_rel_word_len = max([len(word_tokenize(pr)) for pr in positive_rels if pr is not None])
     positive_relw_tensor = lines_to_word_tensor(positive_rels, word_dict, pos_rel_word_len)
     positive_reli_tensor = torch.from_numpy(np.array(pos_rel_idxs))
     #print (positive_relw_tensor.data.size())
     #positive_rele_tensor = torch.Tensor(pos_rel_vecs)
 
-    neg_rel_word_len = max([len(nr) for nr in negative_rels if nr is not None])
+    neg_rel_word_len = max([len(word_tokenize(nr)) for nr in negative_rels if nr is not None])
     negative_relw_tensor = lines_to_word_tensor(negative_rels, word_dict, neg_rel_word_len)
     negative_reli_tensor = torch.from_numpy(np.array(neg_rel_idxs))
     #print (negative_relw_tensor.data.size())

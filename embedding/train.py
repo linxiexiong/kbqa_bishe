@@ -18,8 +18,8 @@ import time
 import math
 import os
 # #
-# os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
-# os.environ["CUDA_VISIBLE_DEVICES"]="3"
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 # torch.cuda.set_device(device=1)
 viz = Visdom()
@@ -51,10 +51,11 @@ def gen_batch_train_data(args, train_data, word_dict, char_dict):
 
 def train(args, word_dict, train_data, entity_dict, relation_dict):
     time_start = time.time()
+    wf = open('error_data.txt', 'w')
     qe_model = EntityModel(args).cuda()
-    qe_model = nn.DataParallel(qe_model, device_ids=[0,1,2,3])
+    #qe_model = nn.DataParallel(qe_model, device_ids=[0,1,2,3])
     qr_model = RelationModel(args).cuda()
-    qr_model = nn.DataParallel(qr_model, device_ids=[0,1,2,3])
+    #qr_model = nn.DataParallel(qr_model, device_ids=[0,1,2,3])
     #print (qe_model.question_emb.word_emb.weight.data)
     words = index_embedding_words(args.embedding_file)
 
@@ -63,18 +64,18 @@ def train(args, word_dict, train_data, entity_dict, relation_dict):
     #load_embeddings(words, word_dict, args.embedding_file, qe_model.question_emb)
     #load_embeddings(words, word_dict, args.embedding_file, qe_model.entity_emb)
     #load_embeddings(words, word_dict, args.embedding_file, qr_model.relation_emb)
-    pre_train_ent_emb = load_entity_embedding(entity_dict, args.entity_dim)
-    pre_train_rel_emb = load_relation_embedding(relation_dict, args.entity_dim)
+    # pre_train_ent_emb = load_entity_embedding(entity_dict, args.entity_dim)
+    # pre_train_rel_emb = load_relation_embedding(relation_dict, args.entity_dim)
 
-    qe_model.module.question_emb.word_emb.weight.data.copy_(pre_train_embedding)
-    qe_model.module.entity_emb.word_emb.weight.data.copy_(pre_train_embedding)
-    qr_model.module.question_emb.word_emb.weight.data.copy_(pre_train_embedding)
-    qr_model.module.relation_emb.word_emb.weight.data.copy_(pre_train_embedding)
+    qe_model.question_emb.word_emb.weight.data.copy_(pre_train_embedding)
+    qe_model.entity_emb.word_emb.weight.data.copy_(pre_train_embedding)
+    qr_model.question_emb.word_emb.weight.data.copy_(pre_train_embedding)
+    qr_model.relation_emb.word_emb.weight.data.copy_(pre_train_embedding)
 
-    qe_model.module.question_emb.ent_emb.weight.data.copy_(pre_train_ent_emb)
-    qe_model.module.entity_emb.entity_emb.weight.data.copy_(pre_train_ent_emb)
-    qr_model.module.question_emb.ent_emb.weight.data.copy_(pre_train_ent_emb)
-    qr_model.module.relation_emb.relation_emb.weight.data.copy_(pre_train_rel_emb)
+    # qe_model.question_emb.ent_emb.weight.data.copy_(pre_train_ent_emb)
+    # qe_model.entity_emb.entity_emb.weight.data.copy_(pre_train_ent_emb)
+    # qr_model.question_emb.ent_emb.weight.data.copy_(pre_train_ent_emb)
+    # qr_model.relation_emb.relation_emb.weight.data.copy_(pre_train_rel_emb)
 
     #print (qe_model.question_emb.word_emb.weight.data)
     #print (qe_model.entity_emb.word_emb.weight.data)
@@ -91,7 +92,7 @@ def train(args, word_dict, train_data, entity_dict, relation_dict):
     #print (qe_model.state_dict())
     def batch_train_entity(data_tensor):
         optimizer.zero_grad()
-        #optimizer_r.zero_grad()
+        optimizer_r.zero_grad()
         #print(optimizer.param_groups)
         if args.method == 'ent_idx':
             pos_entity_emb = data_tensor['positive_enti']
@@ -153,6 +154,8 @@ def train(args, word_dict, train_data, entity_dict, relation_dict):
         #                                                                       word_dict, char_dict)
 
         data_tensor = gen_train_data(train_data, word_dict, char_dict, args)
+        # if data_tensor['positive_entw'].size(1) > 20 or data_tensor['negative_entw'] > 20:
+        #     wf.writelines(data_tensor[''])
         score_n, score_p, loss = batch_train_entity(data_tensor)
         # loss_sum += loss
         # loss_avg = loss_sum / epoch
@@ -266,7 +269,7 @@ if __name__ == "__main__":
     #relation_datas = train_data['relation'].tolist()
     word_datas = question_datas + entitty_datas + relation_datas
     args = argparse.Namespace()
-    args.batch_size = 16
+    args.batch_size = 32
     args.epoch = 10000
     args.learning_rate = 0.002
     args.embedding_file = '../datas/glove.6B.50d.txt'
