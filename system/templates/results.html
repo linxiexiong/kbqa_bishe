@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>问答系统</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/4.0.4/echarts.min.js"></script>
+    <script LANGUAGE="javascript">
+    function checkNull(){
+        var myquestion = document.getElementById("question");
+        if(myquestion.value.length==0){
+          alert("The question cannot be empty!");
+          myquestion.focus();
+          return false;
+        }
+        return true;
+    }
+    </script>
+    <style>
+        input{
+            font-size: 120% !important;
+            text-indent: 10px;
+        }
+        ::-webkit-input-placeholder { 
+            color:    #777777 !important;
+        }
+        :-moz-placeholder {
+            color:    #777777 !important;
+        }
+        ::-moz-placeholder { 
+            color:    #777777 !important;
+        }
+        :-ms-input-placeholder { 
+            color:    #777777 !important;
+        }
+        ::-ms-input-placeholder { 
+            color:    #777777 !important;
+        }
+
+        p{
+            overflow : hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+    </style>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{url_for('index')}}" style="font-weight:bolder;text-indent: 20px;font-size:25px">问答系统</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/algorithm"><span class="glyphicon glyphicon-globe" style=""></span>  算法介绍</a></li>
+                <li><a href="https://github.com/linxiexiong/kbqa_bishe"><span class="glyphicon glyphicon-user"></span>  关于系统</a></li>
+                <li><a href="/index"><span class="glyphicon glyphicon-tags"></span>  主页</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 col-lg-6"  style="margin-left: 2cm; margin-top: 1cm;">
+                <form class="searchbox" role="form" id="form" action="{{ url_for('submit_form') }}" method="post">
+                    <div class="input-group">
+                        <input type="text" class="form-control"  name="question" id="question"
+                               placeholder="Please input a question ..." value="{{ question }}">
+                        <span class="input-group-btn">
+                          <button class="btn btn-primary" type="submit" form="form" onclick="return checkNull()">
+                            ASK
+                          </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-lg-8" style="margin-left:2cm;width:800px;height:500px;">
+                <div class="row">
+                    <div class="col-md-8 col-lg-8" style="margin-top:0.3cm;width:800px;height:50px;" id="answer">
+                        <div class="col-md-2 col-lg-2"  style="margin-top:0.1cm;overflow:hidden" align="center">
+                            <a href="{{main.url}}">
+                                {% if main.image %}
+                                    <img src="{{main.image}}"  alt="{{main.title}}" height="100" title="{{main.title}}"/>
+                                {% else %}
+                                    <img src="http://icons.iconarchive.com/icons/designbolts/free-multimedia/1024/Photo-icon.png"  alt="{{main.title}}" height="100" title="{{main.title}}"/>
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="col-md-10 col-lg-10" style="margin-top:-0.4cm;">
+                            {% if answer.url %}
+                            <h3><a href={{answer.url}}>{{answer.name}}</a>&nbsp;|&nbsp;<a href="{{main.url}}">{{main.title}}</a> ({{main.type}})</h3>
+                            {% else %}
+                            <h3><a href={{answer.url}}>{{answer.name}}</a>&nbsp;|&nbsp;<a href="{{main.url}}">{{main.title}}</a> ({{main.type}})</h3>
+                            {% endif %}
+                            <p>{{main.summary}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-lg-8" style="margin-top:2cm;width:800px;height:450px;" id="graph">
+                        <script type="text/javascript">
+                        function Section(nodename){
+                            var result = "";
+                            var len = nodename.length;
+                            var sep_num = 15
+                            for(var i=0; i<len;i+=sep_num){
+                                if(len < i+sep_num){
+                                    result = result + nodename.substring(i,len);
+                                } else{
+                                    result = result + nodename.substring(i,i+sep_num) + "<br/>";
+                                }
+                            }
+                            return result;
+                        }
+
+                        function OmitName(nodename, count){
+                            var result = "";
+                            var sep_num = 6
+                            if(nodename.length > sep_num){
+                                result = nodename.substring(0, sep_num) + "(" + count + ")...";
+                            } else {
+                                result = nodename;
+                            }
+                            return result;
+                        }
+
+                        function ReplaceNodename(old_name_set, new_name_set, datas){
+                            var index = 0;
+                            var newdata = new Array();
+                            var len = datas.length;
+                            for(var i=0;i<len;i++){
+                                if(i % 2 == 0){
+                                    index = old_name_set.indexOf(Section(datas[i]));
+                                    newdata.push(new_name_set[index]);
+                                } else {
+                                    newdata.push(datas[i]);
+                                }
+                            }
+                            return newdata;
+                        }
+ 
+                        function radicalGraph(){
+                            var newdata = [];
+                            var ori_entity = [];
+                            var node_entity = [];
+
+                            var tmp_entity = "";
+                            var diff_count = 0;
+                            var data_len = alldata.length;
+                            var node_flag = [];
+
+                            for(var i=0;i<data_len;i+=4){
+                                tmp_entity = Section(alldata[i]);
+                                if(ori_entity.indexOf(tmp_entity) == -1){
+                                    ori_entity.push(tmp_entity);
+                                    node_entity.push(OmitName(alldata[i], diff_count));
+                                    diff_count = diff_count + 1;
+                                    node_flag.push(1);
+                                }
+
+                                tmp_entity = Section(alldata[i+2]);
+                                if(ori_entity.indexOf(tmp_entity) == -1){
+                                    ori_entity.push(tmp_entity);
+                                    node_entity.push(OmitName(alldata[i+2], diff_count));
+                                    diff_count = diff_count + 1;
+                                    node_flag.push(alldata[i+3]);
+                                }
+                            }
+
+                            newdata = ReplaceNodename(ori_entity, node_entity, alldata);
+
+                            function DataArray() {
+                                var mydata = new Array();
+                                var len = node_entity.length;
+
+                                // 主实体单独赋值
+                                mydata.push({
+                                    category:0,
+                                    name:node_entity[0],
+                                    ip:ori_entity[0],
+                                    isnode: true
+                                });
+
+                                for(var i=1;i<len;i++){
+                                    mydata.push({
+                                        category:2-node_flag[i],
+                                        name:node_entity[i],
+                                        ip:ori_entity[i],
+                                        isnode: true
+                                    });
+                                }
+
+                                return mydata;
+                            }
+
+                            function LinkData(){
+                                var mylink = new Array();
+                                var len = newdata.length;
+                                for(var i=0; i<len;i+=4){
+                                    if(newdata[i] == newdata[0] && newdata[i+2] != newdata[i]){
+                                        mylink.push({
+                                            source: newdata[i],
+                                            target: newdata[i+2],
+                                            name: newdata[i+1],
+                                            label: {
+                                                normal: {
+                                                    show: true, //color:'#F3A43B',//线上文字颜色
+                                                    formatter: function(x) { return x.data.name }
+                                                }
+                                            },
+                                            lineStyle: {
+                                                normal: {
+                                                    opacity: 1,
+                                                    //width: 2,
+                                                    curveness: 0
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                                return mylink;
+                            }
+
+
+                            var option = {
+                                title: {
+                                    text: ''
+                                },
+                                tooltip: {
+                                    position:'left',
+                                    backgroundColor:'gray',
+                                    textStyle:{fontSize:13},
+                                    formatter:function(params){
+                                        if(params.data.isnode){
+                                            return params.data.ip;
+                                        }
+                                    },  
+                                },
+                                animationDurationUpdate: 1500,
+                                animationEasingUpdate: 'quinticInOut',
+                                legend:{
+                                    y: '10%',
+                                    right: 20,
+                                    data: ['查询实体','实体属性','关联实体'],
+                                }, 
+                                series:[{
+                                type: 'graph',
+                                layout: 'force',//'circular',
+                                symbolSize: 50,//圆的大小
+                                draggable: true,
+                                roam: true,
+                                label: {
+                                    normal: {
+                                        show: true//显示圆中文字 
+                                    }
+                                },
+                                categories: [
+                                    {   
+                                       name:'查询实体',
+                                    },
+                                    { 
+                                       name:'关联实体',
+                                       itemStyle: {
+                                           normal: {
+                                              color: "#4592FF",
+                                          }
+                                       }
+                                    },
+                                    {
+                                       name:'实体属性',
+                                       itemStyle: {
+                                           normal: {
+                                              color: "#CD00CD",
+                                          }
+                                       }
+                                    },       
+                                ],    
+                                //color: '#2f4554',
+                                edgeSymbol: ['circle', 'arrow'],//图的边的类型
+                                edgeSymbolSize: [4, 10],//有向图的箭头大小
+                                force: {
+                                    initLayout: 'circular',
+                                    gravity: 0,
+                                    repulsion: 600,
+                                    edgeLength: 200
+                                }, 
+                                edgeLabel: {
+                                    normal: {
+                                        textStyle: {
+                                            fontSize: 10//线上文字的大小
+                                        }
+                                    }
+                                },
+                                data: DataArray(),
+                                links: LinkData(),
+                                lineStyle: {
+                                    normal: {
+                                        color: '#2f4554'
+                                    }
+                                }
+                                }]
+                            }; 
+                            myChart.setOption(option);    
+                        }
+                        var myChart = echarts.init(document.getElementById('graph'));                        
+                        var alldata = {{data}};
+                        radicalGraph();
+                        </script>
+                    </div>
+                </div>
+            </div> 
+            <div class="col-md-3 col-lg-3" style="margin-left:2cm; margin-top:-0.5cm;">              
+                <ul class="list-group">
+                    <li class="list-group-item active" style="font-weight:bolder;">other possible answers</li>
+                    {% for item in other%}
+                        {% if item.url %}
+                        <a class="list-group-item" href="{{item.url}}" style="color:#5489BC;background-color: #F7F7F7;">{{item.name}}({{item.type}})</a>
+                        {% else %}
+                        <a class="list-group-item" style="color:#787878;background-color: #F7F7F7;">{{item.name}}({{item.type}})</a>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                
+
+                <ul class="list-group">
+                    <li class="list-group-item active" style="font-weight:bolder;">google search results</li>
+                    {% for item in google %}
+                    <li class="list-group-item">
+                        <a href="{{item.url}}" style="color:#5489BC;background-color: #F7F7F7;">{{ item.title }}</a>
+                        <p> {{ item.snippet }} </p>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

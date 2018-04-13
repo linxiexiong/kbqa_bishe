@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>问答系统</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/echarts/4.0.4/echarts.min.js"></script>
+    <script LANGUAGE="javascript">
+    function checkNull(){
+        var myquestion = document.getElementById("question");
+        if(myquestion.value.length==0){
+          alert("The question cannot be empty!");
+          myquestion.focus();
+          return false;
+        }
+        return true;
+    }
+    </script>
+    <style type="text/css">
+        *{margin: 0;padding: 0}
+        html,body{height: 100%}     
+
+        .outer-wrap{
+            height: 100%;    
+            position: relative;
+        }
+        .searchbox{
+            width: 600px;
+            height: 400px;
+            position: absolute;
+            top: -120px;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+        }
+        body { 
+            /*background: url(static/images/Picture-{{num}}.jpg) no-repeat center center fixed; */
+            background: url(static/images/Picture-{{num}}.jpg) no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        input{
+            font-size: 120% !important;
+            text-indent: 10px;
+        }
+        input{
+            font-size: 120% !important;
+            text-indent: 10px;
+        }
+        ::-webkit-input-placeholder { 
+            color:    #777777 !important;
+        }
+        :-moz-placeholder {
+            color:    #777777 !important;
+        }
+        ::-moz-placeholder { 
+            color:    #777777 !important;
+        }
+        :-ms-input-placeholder { 
+            color:    #777777 !important;
+        }
+        ::-ms-input-placeholder { 
+            color:    #777777 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{{url_for('index')}}" style="font-weight:bolder;text-indent: 20px;font-size:25px">问答系统</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/algorithm"><span class="glyphicon glyphicon-globe" style=""></span>  算法介绍</a></li>
+                <li><a href="https://github.com/linxiexiong/kbqa_bishe"><span class="glyphicon glyphicon-user"></span>  关于系统</a></li>
+                <li><a href="/index"><span class="glyphicon glyphicon-tags"></span>  主页</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="outer-wrap"> 
+        <form class="searchbox" role="form" id="form" action="{{ url_for('submit_form') }}" method="post">
+            <div class="row">
+                <a href="/index">
+                    <img src="static/images/logo2.png" width="250" height="150" class="img-responsive center-block"/>
+                </a>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <input type="text" class="form-control"  name="question" id="question"
+                           placeholder="Please input a question ...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-primary" type="submit" onclick="return checkNull()">
+                        ASK
+                      </button>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
